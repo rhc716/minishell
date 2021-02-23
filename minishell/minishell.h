@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:40 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/21 22:04:57 by joopark          ###   ########.fr       */
+/*   Updated: 2021/02/23 20:50:47 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 #  define BUFFER_SIZE 1024
 # endif
 
-char			*ft_strnstack(char *stack, char *str, size_t n);
 char			*ft_getbuf(ssize_t clr, char **bp);
 int				ft_prechk(int fd, char **line, char **bufrtn, char **bp);
 int				ft_get_next_line(int fd, char **line, char **bp);
@@ -43,5 +42,7 @@ char			*ft_getenv(char *envp[], char *key);
 
 char			**ft_parse_exec(char *cmd);
 char			*ft_remove_quote(char *cmd);
+
+char			*ft_strnstack(char *stack, char *str, size_t n);
 
 #endif
