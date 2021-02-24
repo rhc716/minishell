@@ -6,7 +6,7 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 16:38:21 by hroh              #+#    #+#             */
-/*   Updated: 2021/02/24 17:01:48 by hroh             ###   ########.fr       */
+/*   Updated: 2021/02/24 17:22:58 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,5 @@ void ft_env(char **arg, char *envp[])
 
 	i = 0;
 	while (envp[i])
-	{
-		write(1, envp[i], ft_strlen(envp[i]));
-		write(1, "\n", 1);
-		i++;
-	}
+		ft_putendl_fd(envp[i++], 1);
 }
