@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:32 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/24 15:04:35 by joopark          ###   ########.fr       */
+/*   Updated: 2021/02/24 15:11:33 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int				main(int argc, char *argv[], char *envp[])
 		{
 			if (ft_strrchr(arg[0], '/') == NULL)
 				exec = ft_find_exec(envp, arg[0]);
+				// test
 			else
 			{
 				tmp = getcwd(NULL, 0);
