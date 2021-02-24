@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:40 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/24 19:56:43 by hroh             ###   ########.fr       */
+/*   Updated: 2021/02/24 22:46:15 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,12 @@ char			*ft_find_exec(char *envp[], char *cmd);
 // ft_getline.c
 char			*ft_getline(char **bp);
 
-// ft_env.c
+// ft_envctrl.c
 char			*ft_getenv(char *envp[], char *key);
+char			**ft_setenv(char *envp[], char *key, char *value);
+char			**ft_modenv(char *envp[], char *key, char *value);
+char			**ft_newenv(char *envp[], char *key, char *value);
+char			**ft_clearenv(char *envp[], char *key);
 
 // ft_parser.c
 char			**ft_parse_exec(char *cmd);
@@ -51,6 +55,8 @@ char			*ft_remove_quote(char *cmd);
 
 // ft_string.c
 char			*ft_strnstack(char *stack, char *str, size_t n);
+char			**ft_strsdup(char *str[]);
+void			ft_strsfree(char *str[]);
 
 // ft_exit.c
 void			ft_exit(char *msg, int status);

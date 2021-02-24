@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:32 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/24 19:27:59 by hroh             ###   ########.fr       */
+/*   Updated: 2021/02/24 23:40:07 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,11 @@ int				main(int argc, char *argv[], char *envp[])
 	pid_t		b;
 	int			stat_loc;
 	char		*tmp;
+	char		**env;
 
 	ft_signal();
+	env = ft_strsdup(envp);
+	bp = NULL;
 	while (1)
 	{
 		ft_putstr_fd("\n$> ", 1);
@@ -37,7 +40,7 @@ int				main(int argc, char *argv[], char *envp[])
 		if (arg != NULL && arg[0] != NULL)
 		{
 			if (ft_strrchr(arg[0], '/') == NULL)
-				exec = ft_find_exec(envp, arg[0]);
+				exec = ft_find_exec(env, arg[0]);
 			else
 			{
 				tmp = getcwd(NULL, 0);
@@ -46,14 +49,16 @@ int				main(int argc, char *argv[], char *envp[])
 				printf("path : %s\n", exec);
 			}
 			if (ft_check_builtins(arg[0]) == 1)
-				ft_exec_builtins(arg, envp);
+				ft_exec_builtins(arg, env);
 			else
 			{
-				a = ft_exec(exec, arg, envp);
+				a = ft_exec(exec, arg, env);
 				b = waitpid(a, &stat_loc, 0);
 			}
 			printf("pid1 : %d, pid2 : %d, stat_loc : %d\n", a, b, stat_loc);
 		}
+		if (arg != NULL)
+			ft_strsfree(arg);
 		free(line);
 	}
 	return (0);
