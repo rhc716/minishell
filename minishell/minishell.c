@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:32 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/24 15:04:35 by joopark          ###   ########.fr       */
+/*   Updated: 2021/02/24 19:27:59 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int				main(int argc, char *argv[], char *envp[])
 		line = ft_getline(&bp);
 		line = ft_remove_quote(line);
 		arg = ft_parse_exec(line);
-		
 		if (arg != NULL && arg[0] != NULL)
 		{
 			if (ft_strrchr(arg[0], '/') == NULL)
@@ -46,8 +45,13 @@ int				main(int argc, char *argv[], char *envp[])
 				exec = ft_strnstack(exec, arg[0], ft_strlen(arg[0]));
 				printf("path : %s\n", exec);
 			}
-			a = ft_exec(exec, arg, envp);
-			b = waitpid(a, &stat_loc, 0);
+			if (ft_check_builtins(arg[0]) == 1)
+				ft_exec_builtins(arg, envp);
+			else
+			{
+				a = ft_exec(exec, arg, envp);
+				b = waitpid(a, &stat_loc, 0);
+			}
 			printf("pid1 : %d, pid2 : %d, stat_loc : %d\n", a, b, stat_loc);
 		}
 		free(line);

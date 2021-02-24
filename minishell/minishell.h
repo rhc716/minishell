@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:40 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/24 13:45:45 by joopark          ###   ########.fr       */
+/*   Updated: 2021/02/24 19:56:43 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,17 @@ char			*ft_strnstack(char *stack, char *str, size_t n);
 
 // ft_exit.c
 void			ft_exit(char *msg, int status);
+
+// ft_builtins.c
+int				ft_check_builtins(char *cmd);
+void			ft_exec_builtins(char **arg, char *envp[]);
+
+// builtins
+void			ft_cd(char **arg, char *envp[]);
+void			ft_echo(char **arg);
+void			ft_env(char **arg, char *envp[]);
+void			ft_export(char **arg);
+void			ft_pwd(void);
+void			ft_unset(char **arg);
 
 #endif
