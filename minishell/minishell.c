@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:32 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/23 20:52:47 by joopark          ###   ########.fr       */
+/*   Updated: 2021/02/24 15:04:35 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,15 @@ int				main(int argc, char *argv[], char *envp[])
 	int			stat_loc;
 	char		*tmp;
 
-	//chdir("/Users/joohongpark/Documents/code/42/42cursus/minishell/../libft");
-	//printf("path : %s\n", tmp);
 	ft_signal();
 	while (1)
 	{
 		ft_putstr_fd("\n$> ", 1);
 		line = ft_getline(&bp);
-		//write(1, line, ft_strlen(line));
+		line = ft_remove_quote(line);
 		arg = ft_parse_exec(line);
 		
-		if (arg[0] != NULL)
+		if (arg != NULL && arg[0] != NULL)
 		{
 			if (ft_strrchr(arg[0], '/') == NULL)
 				exec = ft_find_exec(envp, arg[0]);

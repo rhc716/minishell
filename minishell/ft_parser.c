@@ -6,19 +6,13 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 00:08:50 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/21 22:30:53 by joopark          ###   ########.fr       */
+/*   Updated: 2021/02/24 15:04:22 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdio.h>
 
-int				ft_parse_path(char *cmd)
-{
-	(void) cmd;
-	return (-1);
-}
-
+// 명령어 (명령어 + 인수들)를 공백 단위로 파싱하여 2차원 배열로 리턴. quote 내의 0xff는 공백으로 다시 치환
 char			**ft_parse_exec(char *cmd)
 {
 	char		**rtn;
@@ -26,7 +20,6 @@ char			**ft_parse_exec(char *cmd)
 	int			j;
 	
 	i = 0;
-	cmd = ft_remove_quote(cmd);
 	rtn = ft_split(cmd, ' ');
 	while (rtn[i] != NULL)
 	{
@@ -42,6 +35,7 @@ char			**ft_parse_exec(char *cmd)
 	return (rtn);
 }
 
+// 명령어 (명령어 + 인수들)의 quote를 제거함. quote 내의 공백은 0xff로 치환한다.
 char			*ft_remove_quote(char *cmd)
 {
 	int			i;

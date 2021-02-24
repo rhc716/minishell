@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/18 22:14:27 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/24 13:31:53 by joopark          ###   ########.fr       */
+/*   Created: 2021/02/24 13:38:29 by joopark           #+#    #+#             */
+/*   Updated: 2021/02/24 13:44:04 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// 2차원 배열 env에서 키값에 따른 문자열을 리턴하는 함수
-char			*ft_getenv(char *envp[], char *key)
+// 미니쉘 종료시 출력할 메시지와 종료 코드를 받아 종료함.
+void			ft_exit(char *msg, int status)
 {
-	int			i;
-
-	i = 0;
-	while (envp[i] != NULL)
-	{
-		if (ft_strncmp(envp[i], key, 4) == 0)
-		{
-			return (envp[i] + ft_strlen(key) + 1);
-		}
-		i++;
-	}
-	return (NULL);
+	if (msg != NULL)
+		ft_putstr_fd(msg, 1);
+	exit(status);
 }

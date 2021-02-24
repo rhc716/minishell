@@ -6,12 +6,13 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 14:33:02 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/18 22:48:16 by joopark          ###   ########.fr       */
+/*   Updated: 2021/02/24 14:32:29 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// 파일경로, 아규먼트, 환경변수를 받아 프로세스를 실행하여 자식 프로세스의 PID를 리턴 (free 필요없음)
 pid_t			ft_exec(char *file, char *argv[], char *envp[])
 {
 	pid_t		rtn;
@@ -22,6 +23,7 @@ pid_t			ft_exec(char *file, char *argv[], char *envp[])
 	return (rtn);
 }
 
+// 인수로 입력된 파일이 실행 가능한지를 판별함 (실행 가능하면 1 리턴)
 int				ft_isexecutable(char *file)
 {
 	struct stat	test;
@@ -32,6 +34,7 @@ int				ft_isexecutable(char *file)
 		return (0);
 }
 
+// env 내의 PATH 중 실행 가능한 명령어 찾기. 실행 가능하면 파일경로 리턴 (free 필요)
 char			*ft_find_exec(char *envp[], char *cmd)
 {
 	char		*rtn;
