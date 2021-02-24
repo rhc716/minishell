@@ -6,7 +6,7 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:32 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/24 16:56:38 by hroh             ###   ########.fr       */
+/*   Updated: 2021/02/24 19:27:59 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int				main(int argc, char *argv[], char *envp[])
 		line = ft_getline(&bp);
 		line = ft_remove_quote(line);
 		arg = ft_parse_exec(line);
-		
 		if (arg != NULL && arg[0] != NULL)
 		{
 			if (ft_strrchr(arg[0], '/') == NULL)

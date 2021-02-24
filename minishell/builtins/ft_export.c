@@ -6,7 +6,7 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 16:38:24 by hroh              #+#    #+#             */
-/*   Updated: 2021/02/24 16:46:58 by hroh             ###   ########.fr       */
+/*   Updated: 2021/02/24 19:39:18 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 void ft_export(char **arg)
 {
+	// 테스트용도
 	printf("func : %s\n", __func__);
-	printf("arg[0] : %s\n", arg[0]);
+	int i = -1;
+	while (arg[++i])
+		printf("arg[%d] : %s\n", i, arg[i]);
+	// 테스트용도
 }

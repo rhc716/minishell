@@ -6,7 +6,7 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 15:51:19 by hroh              #+#    #+#             */
-/*   Updated: 2021/02/24 17:15:12 by hroh             ###   ########.fr       */
+/*   Updated: 2021/02/24 19:56:32 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void ft_exec_builtins(char **arg, char *envp[])
 	int status;
 
 	if (!ft_strncmp(arg[0], "cd", 3))
-		ft_cd(arg);
+		ft_cd(arg, envp);
 	else if (!ft_strncmp(arg[0], "echo", 5))
 		ft_echo(arg);
 	else if (!ft_strncmp(arg[0], "pwd", 4))
