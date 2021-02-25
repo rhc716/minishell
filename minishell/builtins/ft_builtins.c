@@ -6,29 +6,29 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 15:51:19 by hroh              #+#    #+#             */
-/*   Updated: 2021/02/24 19:56:32 by hroh             ###   ########.fr       */
+/*   Updated: 2021/02/25 17:03:42 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 // 배열의 첫번째 요소인 builtin 함수를 실행
-void ft_exec_builtins(char **arg, char *envp[])
+int ft_exec_builtins(char **arg, char **envp[])
 {
 	int status;
 
 	if (!ft_strncmp(arg[0], "cd", 3))
-		ft_cd(arg, envp);
+		ft_cd(arg, *envp);
 	else if (!ft_strncmp(arg[0], "echo", 5))
-		ft_echo(arg);
+		ft_echo(arg, *envp);
 	else if (!ft_strncmp(arg[0], "pwd", 4))
 		ft_pwd();
 	else if (!ft_strncmp(arg[0], "env", 4))
-		ft_env(arg, envp);
+		ft_env(arg, *envp);
 	else if (!ft_strncmp(arg[0], "export", 7))
-		ft_export(arg);
+		ft_export(arg, envp);
 	else if (!ft_strncmp(arg[0], "unset", 6))
-		ft_unset(arg);
+		ft_unset(arg, envp);
 	else if (!ft_strncmp(arg[0], "exit", 5))
 		ft_exit("builtin exit", status);
 	else

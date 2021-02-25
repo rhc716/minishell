@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_envctrl.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 22:14:27 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/24 22:46:12 by joopark          ###   ########.fr       */
+/*   Updated: 2021/02/25 17:47:39 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char			*ft_getenv(char *envp[], char *key)
 	i = 0;
 	while (envp[i] != NULL)
 	{
-		if (ft_strncmp(envp[i], key, 4) == 0)
+		if (ft_strncmp(envp[i], key, ft_strlen(key)) == 0)
 		{
 			return (envp[i] + ft_strlen(key) + 1);
 		}
@@ -49,7 +49,7 @@ char			**ft_modenv(char *envp[], char *key, char *value)
 	newval = ft_strnstack(newval, value, ft_strlen(value));
 	while (envp[i] != NULL)
 	{
-		if (ft_strncmp(envp[i], key, 4) == 0)
+		if (ft_strncmp(envp[i], key, ft_strlen(key)) == 0)
 		{
 			free(envp[i]);
 			envp[i] = newval;
@@ -104,7 +104,7 @@ char			**ft_clearenv(char *envp[], char *key)
 	j = -1;
 	while (envp[i] != NULL)
 	{
-		if (ft_strncmp(envp[i], key, 4) != 0 && i == j)
+		if (ft_strncmp(envp[i], key, ft_strlen(key)) != 0)
 			rtn[++j] = ft_strdup(envp[i]);
 		i++;
 	}
