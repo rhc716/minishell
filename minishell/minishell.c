@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:32 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/25 16:30:04 by joopark          ###   ########.fr       */
+/*   Updated: 2021/02/26 00:53:49 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int				main(int argc, char *argv[], char *envp[])
 	char		*in;
 	char		*out;
 	char		rp;
+	int			io[2] = {0, 0};
 
 
 	ft_signal();
@@ -42,6 +43,13 @@ int				main(int argc, char *argv[], char *envp[])
 		line = ft_remove_quote(line);
 		line = ft_parse_redirect(line, &in, &out, &rp); // 리다이렉트 파서
 		printf("in : %s, out : %s, rp : %c\n", in, out, rp);
+		if (in != NULL)
+			io[0] = ft_getfd(in, 'r');
+		if (out != NULL && rp == 'w')
+			io[1] = ft_getfd(out, 'w');
+		if (out != NULL && rp == '+')
+			io[1] = ft_getfd(out, '+');
+		printf("in : %d, out : %d\n", io[0], io[1]);
 		arg = ft_parse_exec(line);
 		if (arg != NULL && arg[0] != NULL)
 		{
@@ -58,8 +66,12 @@ int				main(int argc, char *argv[], char *envp[])
 				ft_exec_builtins(arg, env);
 			else
 			{
-				a = ft_exec(exec, arg, env);
+				a = ft_exec(exec, arg, env, io);
 				b = waitpid(a, &stat_loc, 0);
+				if (io[0] > 0)
+					close(io[0]);
+				if (io[1] > 0)
+					close(io[1]);
 			}
 			printf("pid1 : %d, pid2 : %d, stat_loc : %d\n", a, b, stat_loc);
 		}

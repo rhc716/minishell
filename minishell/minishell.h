@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:40 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/25 14:03:44 by joopark          ###   ########.fr       */
+/*   Updated: 2021/02/25 23:51:23 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <libft.h>
 # include <unistd.h>
 # include <signal.h>
+# include <fcntl.h>
 # include <sys/stat.h>
 # include <sys/errno.h>
 # include <sys/wait.h>
@@ -35,7 +36,7 @@ void			ft_sigint(int code);
 void			ft_sigkill(int code);
 
 // ft_exec.c
-pid_t			ft_exec(char *file, char *argv[], char *envp[]);
+pid_t			ft_exec(char *file, char *argv[], char *envp[], int fd[]);
 int				ft_isexecutable(char *file);
 char			*ft_find_exec(char *envp[], char *cmd);
 
@@ -62,6 +63,9 @@ int				ft_getword(char *str, char **word);
 
 // ft_exit.c
 void			ft_exit(char *msg, int status);
+
+// ft_ioctl.c
+int				ft_getfd(char *filename, char mode);
 
 // ft_builtins.c
 int				ft_check_builtins(char *cmd);
