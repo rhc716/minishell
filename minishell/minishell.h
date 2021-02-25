@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:40 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/24 22:46:15 by joopark          ###   ########.fr       */
+/*   Updated: 2021/02/25 14:03:44 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,13 @@ char			**ft_clearenv(char *envp[], char *key);
 // ft_parser.c
 char			**ft_parse_exec(char *cmd);
 char			*ft_remove_quote(char *cmd);
+char			*ft_parse_redirect(char *cmd, char **in, char **out, char *rp);
 
 // ft_string.c
 char			*ft_strnstack(char *stack, char *str, size_t n);
 char			**ft_strsdup(char *str[]);
 void			ft_strsfree(char *str[]);
+int				ft_getword(char *str, char **word);
 
 // ft_exit.c
 void			ft_exit(char *msg, int status);

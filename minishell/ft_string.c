@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 20:50:25 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/24 22:24:34 by joopark          ###   ########.fr       */
+/*   Updated: 2021/02/25 16:27:56 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,30 @@ void			ft_strsfree(char *str[])
 		i--;
 	}
 	free(str);
+}
+
+// (리다이렉트 전용) str에서 단어 하나만 가져옴. 공백 포함 단어 길이만큼 리턴. 단어는 공백으로 비움.
+int				ft_getword(char *str, char **word)
+{
+	int			rtn;
+	int			start;
+
+	rtn = 0;
+	str[rtn++] = ' ';
+	str[rtn++] = ' ';
+	str[rtn++] = ' ';
+	while (str[rtn] != '\0' && str[rtn] == ' ')
+		rtn++;
+	start = rtn;
+	while (str[rtn] != '\0' && str[rtn] != ' ')
+		rtn++;
+	if (*word != NULL)
+		free(*word);
+	*word = ft_substr(str, start, rtn - start);
+	while (start != rtn)
+	{
+		str[start] = ' ';
+		start++;
+	}
+	return (rtn);
 }

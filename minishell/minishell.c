@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:32 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/24 23:40:07 by joopark          ###   ########.fr       */
+/*   Updated: 2021/02/25 16:30:04 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ int				main(int argc, char *argv[], char *envp[])
 	int			stat_loc;
 	char		*tmp;
 	char		**env;
+	char		*in;
+	char		*out;
+	char		rp;
+
 
 	ft_signal();
 	env = ft_strsdup(envp);
@@ -36,6 +40,8 @@ int				main(int argc, char *argv[], char *envp[])
 		ft_putstr_fd("\n$> ", 1);
 		line = ft_getline(&bp);
 		line = ft_remove_quote(line);
+		line = ft_parse_redirect(line, &in, &out, &rp); // 리다이렉트 파서
+		printf("in : %s, out : %s, rp : %c\n", in, out, rp);
 		arg = ft_parse_exec(line);
 		if (arg != NULL && arg[0] != NULL)
 		{
