@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:40 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/24 22:46:15 by joopark          ###   ########.fr       */
+/*   Updated: 2021/02/25 21:24:37 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,17 @@ void			ft_exit(char *msg, int status);
 
 // ft_builtins.c
 int				ft_check_builtins(char *cmd);
-void			ft_exec_builtins(char **arg, char *envp[]);
+int				ft_exec_builtins(char **arg, char **envp[]);
 
 // builtins
 void			ft_cd(char **arg, char *envp[]);
-void			ft_echo(char **arg);
+void			ft_echo(char **arg, char *envp[]);
 void			ft_env(char **arg, char *envp[]);
-void			ft_export(char **arg);
+void			ft_export(char **arg, char **envp[]);
 void			ft_pwd(void);
-void			ft_unset(char **arg);
+void			ft_unset(char **arg, char **envp[]);
+
+// ft_export.c
+void			ft_export_arg(char *key, char* val, char **envp[]);
 
 #endif

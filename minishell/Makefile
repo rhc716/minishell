@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+         #
+#    By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/09 01:43:43 by joopark           #+#    #+#              #
-#    Updated: 2021/02/24 22:24:51 by joopark          ###   ########.fr        #
+#    Updated: 2021/02/25 14:30:34 by hroh             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ FILES += ./builtins/ft_builtins.c ./builtins/ft_cd.c \
 OBJS = ${FILES:%.c=%.o}
 NAME = minishell
 COMPILER = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra #-Werror
 CLFLAGS = -lft
 HEADERPATH = ./
 LIBFTPATH = ./libs/libft

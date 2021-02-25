@@ -6,13 +6,13 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 16:38:27 by hroh              #+#    #+#             */
-/*   Updated: 2021/02/24 17:21:52 by hroh             ###   ########.fr       */
+/*   Updated: 2021/02/25 17:49:21 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void ft_pwd(void)
+void	ft_pwd(void)
 {
 	char *path;
 

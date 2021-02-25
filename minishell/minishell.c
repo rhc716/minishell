@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:32 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/24 23:40:07 by joopark          ###   ########.fr       */
+/*   Updated: 2021/02/25 16:59:49 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int				main(int argc, char *argv[], char *envp[])
 				printf("path : %s\n", exec);
 			}
 			if (ft_check_builtins(arg[0]) == 1)
-				ft_exec_builtins(arg, env);
+				ft_exec_builtins(arg, &env);
 			else
 			{
 				a = ft_exec(exec, arg, env);
