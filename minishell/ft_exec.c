@@ -6,20 +6,27 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 14:33:02 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/24 14:32:29 by joopark          ###   ########.fr       */
+/*   Updated: 2021/02/26 00:51:20 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // 파일경로, 아규먼트, 환경변수를 받아 프로세스를 실행하여 자식 프로세스의 PID를 리턴 (free 필요없음)
-pid_t			ft_exec(char *file, char *argv[], char *envp[])
+pid_t			ft_exec(char *file, char *argv[], char *envp[], int fd[])
 {
 	pid_t		rtn;
+	int			io[2];
 
 	rtn = fork();
 	if (rtn == 0)
+	{
+		if (fd[0] > 0)
+			io[0] = dup2(fd[0], STDIN_FILENO);
+		if (fd[1] > 0)
+			io[1] = dup2(fd[1], STDOUT_FILENO);
 		execve(file, argv, envp);
+	}
 	return (rtn);
 }
 
