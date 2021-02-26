@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:40 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/26 13:51:44 by hroh             ###   ########.fr       */
+/*   Updated: 2021/02/26 14:30:12 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,9 @@ char			**ft_newenv(char *envp[], char *key, char *value);
 char			**ft_clearenv(char *envp[], char *key);
 
 // ft_parser.c
-char			**ft_parse_exec(char *cmd);
-char			*ft_remove_quote(char *cmd);
+char			*ft_parse_replace_quote(char *str, char c);
+char			*ft_parse_replace_inquote(char *str, char c, char r);
+char			**ft_parse_split(char *str, char s, char c, char r);
 char			*ft_parse_redirect(char *cmd, char **in, char **out, char *rp);
 
 // ft_string.c
