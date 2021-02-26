@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:40 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/26 13:51:44 by hroh             ###   ########.fr       */
+/*   Updated: 2021/02/26 17:32:23 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,9 @@ char			**ft_newenv(char *envp[], char *key, char *value);
 char			**ft_clearenv(char *envp[], char *key);
 
 // ft_parser.c
-char			**ft_parse_exec(char *cmd);
-char			*ft_remove_quote(char *cmd);
+char			*ft_parse_replace_quote(char *str, char c);
+char			*ft_parse_replace_inquote(char *str, char c, char r);
+char			**ft_parse_split(char *str, char s, char c, char r);
 char			*ft_parse_redirect(char *cmd, char **in, char **out, char *rp);
 
 // ft_string.c
@@ -64,8 +65,14 @@ int				ft_getword(char *str, char **word);
 // ft_exit.c
 void			ft_exit(char *msg, int status);
 
-// ft_ioctl.c
+// ft_ioctrl.c
 int				ft_getfd(char *filename, char mode);
+char			*ft_ext_iofd(char *cmd, int *i, int *o, int *err);
+
+// ft_run.c
+void			ft_run(char *cmd, char *envp[]);
+void			ft_run_with_pipe(char *cmd, char *envp[]);
+void			ft_run_cmd(char *cmd, char *envp[], int i, int o);
 
 // ft_builtins.c
 int				ft_check_builtins(char *cmd);
