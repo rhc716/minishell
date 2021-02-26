@@ -6,13 +6,13 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 16:38:21 by hroh              #+#    #+#             */
-/*   Updated: 2021/02/25 17:49:50 by hroh             ###   ########.fr       */
+/*   Updated: 2021/02/26 13:08:00 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_env(char **arg, char *envp[])
+void	ft_env(char *envp[])
 {
 	int i;
 

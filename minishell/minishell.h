@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:40 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/26 01:04:51 by joopark          ###   ########.fr       */
+/*   Updated: 2021/02/26 13:51:44 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,12 @@ int				ft_exec_builtins(char **arg, char **envp[]);
 // builtins
 void			ft_cd(char **arg, char *envp[]);
 void			ft_echo(char **arg, char *envp[]);
-void			ft_env(char **arg, char *envp[]);
+void			ft_env(char *envp[]);
 void			ft_export(char **arg, char **envp[]);
 void			ft_pwd(void);
 void			ft_unset(char **arg, char **envp[]);
 
 // ft_export.c
-void			ft_export_arg(char *key, char* val, char **envp[]);
+void			ft_export_arg(char *key, char *val, char **envp[]);
 
 #endif
