@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:40 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/26 14:30:12 by joopark          ###   ########.fr       */
+/*   Updated: 2021/02/26 17:32:23 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,14 @@ int				ft_getword(char *str, char **word);
 // ft_exit.c
 void			ft_exit(char *msg, int status);
 
-// ft_ioctl.c
+// ft_ioctrl.c
 int				ft_getfd(char *filename, char mode);
+char			*ft_ext_iofd(char *cmd, int *i, int *o, int *err);
+
+// ft_run.c
+void			ft_run(char *cmd, char *envp[]);
+void			ft_run_with_pipe(char *cmd, char *envp[]);
+void			ft_run_cmd(char *cmd, char *envp[], int i, int o);
 
 // ft_builtins.c
 int				ft_check_builtins(char *cmd);

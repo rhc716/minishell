@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 00:08:50 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/26 11:50:31 by joopark          ###   ########.fr       */
+/*   Updated: 2021/02/26 16:12:32 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,34 +87,6 @@ char			**ft_parse_split(char *str, char s, char c, char r)
 		i++;
 	}
 	return (rtn);
-}
-
-// 명령어 내의 리다이렉션을 찾아 해당 파일을 인수로 반환하며 리다이렉션 및 파일은 공백으로 치환한다.
-char			*ft_parse_replace(char *cmd, char **in, char **out, char *rp)
-{
-	int			i;
-
-	i = 0;
-	*in = NULL;
-	*out = NULL;
-	while (cmd[i] != '\0')
-	{
-		if (ft_strncmp(&cmd[i], " < ", 3) == 0)
-			i += ft_getword(&cmd[i], in);
-		else if (ft_strncmp(&cmd[i], " > ", 3) == 0)
-		{
-			i += ft_getword(&cmd[i], out);
-			*rp = 'w';
-		}
-		else if (ft_strncmp(&cmd[i], " >> ", 4) == 0)
-		{
-			i += ft_getword(&cmd[i], out);
-			*rp = '+';
-		}
-		else
-			i++;
-	}
-	return (cmd);
 }
 
 // 명령어 내의 리다이렉션을 찾아 해당 파일을 인수로 반환하며 리다이렉션 및 파일은 공백으로 치환한다.

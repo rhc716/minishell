@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:32 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/26 11:52:10 by joopark          ###   ########.fr       */
+/*   Updated: 2021/02/26 16:22:05 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,22 @@ int				main(int argc, char *argv[], char *envp[])
 	(void) argc;
 	(void) argv;
 	char		*bp;
+	char		**env;
 	char		*line;
+
+
+	/*
 	char		*exec;
 	char		**arg;
 	pid_t		a;
 	pid_t		b;
 	int			stat_loc;
 	char		*tmp;
-	char		**env;
 	char		*in;
 	char		*out;
 	char		rp;
 	int			io[2] = {0, 0};
+	*/
 
 
 	ft_signal();
@@ -40,16 +44,12 @@ int				main(int argc, char *argv[], char *envp[])
 	{
 		ft_putstr_fd("\n$> ", 1);
 		line = ft_getline(&bp);
+		ft_run(line, NULL);
+		/*
 		line = ft_parse_replace_inquote(line, ' ', (char)0xff);
 		line = ft_parse_replace_quote(line, ' ');
 		line = ft_parse_redirect(line, &in, &out, &rp); // 리다이렉트 파서
 		printf("in : %s, out : %s, rp : %c\n", in, out, rp);
-		if (in != NULL)
-			io[0] = ft_getfd(in, 'r');
-		if (out != NULL && rp == 'w')
-			io[1] = ft_getfd(out, 'w');
-		if (out != NULL && rp == '+')
-			io[1] = ft_getfd(out, '+');
 		printf("in : %d, out : %d\n", io[0], io[1]);
 		arg = ft_parse_split(line, ' ', (char)0xff, ' ');
 		if (arg != NULL && arg[0] != NULL)
@@ -78,6 +78,7 @@ int				main(int argc, char *argv[], char *envp[])
 		}
 		if (arg != NULL)
 			ft_strsfree(arg);
+		*/
 		free(line);
 	}
 	return (0);
