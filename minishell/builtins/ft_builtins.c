@@ -6,14 +6,14 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 15:51:19 by hroh              #+#    #+#             */
-/*   Updated: 2021/02/25 17:03:42 by hroh             ###   ########.fr       */
+/*   Updated: 2021/02/26 13:49:53 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 // 배열의 첫번째 요소인 builtin 함수를 실행
-int ft_exec_builtins(char **arg, char **envp[])
+int	ft_exec_builtins(char **arg, char **envp[])
 {
 	int status;
 
@@ -24,7 +24,7 @@ int ft_exec_builtins(char **arg, char **envp[])
 	else if (!ft_strncmp(arg[0], "pwd", 4))
 		ft_pwd();
 	else if (!ft_strncmp(arg[0], "env", 4))
-		ft_env(arg, *envp);
+		ft_env(*envp);
 	else if (!ft_strncmp(arg[0], "export", 7))
 		ft_export(arg, envp);
 	else if (!ft_strncmp(arg[0], "unset", 6))
@@ -37,7 +37,7 @@ int ft_exec_builtins(char **arg, char **envp[])
 }
 
 // 문자열이 builtin 함수인지 검사
-int ft_check_builtins(char *cmd)
+int	ft_check_builtins(char *cmd)
 {
 	if (!ft_strncmp(cmd, "cd", 3) || !ft_strncmp(cmd, "echo", 5)
 	|| !ft_strncmp(cmd, "pwd", 4) || !ft_strncmp(cmd, "env", 4)
