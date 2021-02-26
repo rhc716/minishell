@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:32 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/26 19:14:16 by joopark          ###   ########.fr       */
+/*   Updated: 2021/02/26 19:47:07 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ int				main(int argc, char *argv[], char *envp[])
 		ft_putstr_fd("\n$> ", 1);
 		line = ft_getline(&bp);
 		ft_run(line, NULL);
-		line = ft_remove_quote(line);
+		line = ft_parse_replace_inquote(line, ' ', (char)0xff);
+ 		line = ft_parse_replace_quote(line, ' ');
 		line = ft_parse_redirect(line, &in, &out, &rp); // 리다이렉트 파서
 		printf("in : %s, out : %s, rp : %c\n", in, out, rp);
 		if (in != NULL)
@@ -51,7 +52,7 @@ int				main(int argc, char *argv[], char *envp[])
 		if (out != NULL && rp == '+')
 			io[1] = ft_getfd(out, '+');
 		printf("in : %d, out : %d\n", io[0], io[1]);
-		arg = ft_parse_exec(line);
+		arg = ft_parse_split(line, ' ', (char)0xff, ' ');
 		if (arg != NULL && arg[0] != NULL)
 		{
 			if (ft_strrchr(arg[0], '/') == NULL)
