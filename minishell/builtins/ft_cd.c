@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 16:36:56 by hroh              #+#    #+#             */
-/*   Updated: 2021/02/25 21:47:41 by hroh             ###   ########.fr       */
+/*   Updated: 2021/02/26 21:09:30 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	ft_cd_home(char **arg, char *envp[], char *old_pwd)
 {
 	char	*path;
 
+	(void) arg; // 미사용 변수
 	path = ft_getenv(envp, "HOME");
 	if (chdir(path) == 0)
 		ft_export_pwd(envp, old_pwd);
@@ -64,12 +65,13 @@ void	ft_cd(char **arg, char *envp[])
 	char	*old_pwd;
 	int		ret;
 
+	(void) arg; // 미사용 변수
 	path = 0;
 	ret = 0;
 	old_pwd = getcwd(NULL, 0);
 	if (arg[1] != NULL && arg[1][0] != '~' && arg[1][0] != '$')
 		ft_cd_path(arg, envp, old_pwd);
-	else if (arg[1] == NULL || (arg[1][0] == '~' && arg[1][1] == NULL))
+	else if (arg[1] == NULL || (arg[1][0] == '~' && arg[1][1] == '\0'))
 		ft_cd_home(arg, envp, old_pwd);
 	else if (arg[1][0] == '$')
 		ft_cd_env(arg, envp, old_pwd);
