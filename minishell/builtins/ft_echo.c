@@ -6,7 +6,7 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 16:38:17 by hroh              #+#    #+#             */
-/*   Updated: 2021/02/25 17:57:09 by hroh             ###   ########.fr       */
+/*   Updated: 2021/02/27 17:26:55 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		ft_check_option_n(char *arg)
 void	ft_echo_env(char *env_key, char *envp[])
 {
 	if (*env_key == '?')
-		ft_putstr_fd("exit_status", 1);
+		ft_putstr_fd("exit_status", 1); // 추가 필요
 	if (*env_key != '?')
 		ft_putstr_fd(ft_getenv(envp, env_key), 1);
 }
