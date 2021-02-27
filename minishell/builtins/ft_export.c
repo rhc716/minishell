@@ -6,7 +6,7 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 16:38:24 by hroh              #+#    #+#             */
-/*   Updated: 2021/02/26 14:57:34 by hroh             ###   ########.fr       */
+/*   Updated: 2021/02/27 16:34:33 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,10 @@ void	ft_export(char **arg, char **envp[])
 		i = 0;
 		while (arg[1][i] && arg[1][i] != '=')
 			i++;
-		if (i == ft_strlen(arg[1]) || i == 0)
+		if (i == (int)ft_strlen(arg[1]) || i == 0)
 			return ;
 		argv = ft_strdup(arg[1]);
-		argv[i] = NULL;
+		argv[i] = '\0';
 		key = argv;
 		val = argv + i + 1;
 		if (val != NULL)
