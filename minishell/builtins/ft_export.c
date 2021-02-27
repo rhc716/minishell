@@ -6,7 +6,7 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 16:38:24 by hroh              #+#    #+#             */
-/*   Updated: 2021/02/27 16:34:33 by hroh             ###   ########.fr       */
+/*   Updated: 2021/02/27 18:28:55 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,22 @@ int		ft_isvalid_key(char *key)
 	while (key[++i])
 	{
 		if (!ft_isalpha(key[i]) && !ft_isdigit(key[i]) && key[i] != '_')
+		{
+			ft_putstr_fd("export: not valid in this context: ", 1); // error
+			ft_putstr_fd(key, 1);
+			ft_putchar_fd('\n', 1);
 			return (0);
+		}
 		if (ft_isalpha(key[i]) || key[i] == '_')
 			alp_or_under = 1;
 	}
 	if (alp_or_under == 0)
+	{
+		ft_putstr_fd("export: not an identifier: ", 1); // error
+		ft_putstr_fd(key, 1);
+		ft_putchar_fd('\n', 1);
 		return (0);
+	}
 	return (1);
 }
 
