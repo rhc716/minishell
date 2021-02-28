@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 12:22:59 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/28 16:18:24 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/01 01:40:29 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void			ft_run(char *cmd, char *envp[])
 // 세미콜론으로 분리된 명령어를 파이프로 나누어진대로 실행
 void			ft_run_with_pipe(char *cmd, char *envp[])
 {
+	pid_t		*pids;
 	char		**cmds;
 	int			**pipes;
-	int			pipe[2];
 	int			i;
 
 	i = 0;
@@ -44,34 +44,25 @@ void			ft_run_with_pipe(char *cmd, char *envp[])
 	cmds = ft_parse_split(cmd, '|', (char)0xff, '|');
 	while (cmds[i] != NULL)
 		i++;
-	pipes = ft_genpipe(i);
+	pids = malloc(sizeof(pid_t) * i);
+	pipes = ft_genpipes(i);
 	i = 0;
 	while (cmds[i] != NULL)
 	{
-		if (i > 0)
-			printf("[%s] pipe %d<-%d\n", __func__, pipes[i - 1][0], pipes[i - 1][1]);
-		if (i == 0)
-			pipe[0] = STDIN_FILENO;
-		else
-			pipe[0] = pipes[i - 1][0];
-		if (cmds[i + 1] == NULL)
-			pipe[1] = STDOUT_FILENO;
-		else
-			pipe[1] = pipes[i][1];
-		printf("[%s] %s\n", __func__, cmds[i]);
-		ft_run_cmd(cmds[i], envp, pipe);
+		pids[i] = ft_run_cmd(cmds[i], envp, pipes[i]);
 		i++;
 	}
+	ft_exec_wait(pids, i);
 	ft_closepipe(pipes, i);
 	ft_strsfree(cmds);
 }
 
 // 가장 작은 명령어 하나에 대해서 실행
-void			ft_run_cmd(char *cmd, char *envp[], int io[])
+pid_t			ft_run_cmd(char *cmd, char *envp[], int io[])
 {
+	pid_t		rtn;
 	char		**arg;
 	int			ioerr[3];
-	pid_t		run;
 
 	printf("[%s] I : %d / O : %d\n", __func__, io[0], io[1]);
 	cmd = ft_parse_replace_inquote(cmd, ' ', (char)0xff);
@@ -84,12 +75,13 @@ void			ft_run_cmd(char *cmd, char *envp[], int io[])
 		io[0] = ioerr[0];
 	if (ioerr[1] > 0)
 		io[1] = ioerr[1];
-	run = ft_run_exec(arg, envp, io);
+	rtn = ft_run_exec(arg, envp, io);
 	if (ioerr[0] > 0)
 		close(ioerr[0]);
 	if (ioerr[1] > 0)
 		close(ioerr[1]);
 	ft_strsfree(arg);
+	return (rtn);
 }
 
 // 가장 작은 바이너리 하나에 대해서 실행
@@ -112,7 +104,6 @@ pid_t			ft_run_exec(char *args[], char *envp[], int io[])
 		{
 			exec = ft_find_exec(envp, args[0]);
 			rtn = ft_exec(exec, args, envp, io);
-			//b = waitpid(a, &stat_loc, 0);
 			printf("pid1 : %d, pid2 : %d, stat_loc : %d\n", rtn, b, stat_loc);
 		}
 		else
@@ -121,7 +112,6 @@ pid_t			ft_run_exec(char *args[], char *envp[], int io[])
 			exec = ft_strnstack(tmp, "/", 1);
 			exec = ft_strnstack(exec, args[0], ft_strlen(args[0]));
 			rtn = ft_exec(exec, args, envp, io);
-			//b = waitpid(a, &stat_loc, 0);
 			printf("pid1 : %d, pid2 : %d, stat_loc : %d\n", rtn, b, stat_loc);
 		}
 	}

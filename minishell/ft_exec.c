@@ -6,11 +6,12 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 14:33:02 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/28 01:32:19 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/01 00:38:37 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdio.h>
 
 // 파일경로, 아규먼트, 환경변수를 받아 프로세스를 실행하여 자식 프로세스의 PID를 리턴 (free 필요없음)
 pid_t			ft_exec(char *file, char *argv[], char *envp[], int fd[])
@@ -26,6 +27,13 @@ pid_t			ft_exec(char *file, char *argv[], char *envp[], int fd[])
 		if (fd[1] != STDOUT_FILENO)
 			io[1] = dup2(fd[1], STDOUT_FILENO);
 		execve(file, argv, envp);
+	}
+	else
+	{
+		if (fd[0] != STDIN_FILENO)
+			close(fd[0]);
+		if (fd[1] != STDOUT_FILENO)
+			close(fd[1]);
 	}
 	return (rtn);
 }
@@ -68,5 +76,26 @@ char			*ft_find_exec(char *envp[], char *cmd)
 		j++;
 	}
 	free(paths[j]);
+	return (rtn);
+}
+
+// pids 배열의 pid들을 기다린다.
+int				ft_exec_wait(pid_t *pids, int n)
+{
+	int			stat_loc;
+	int			tmp;
+	int			rtn;
+	int			i;
+
+	rtn = 0;
+	i = 0;
+	while (i < n)
+	{
+		tmp = waitpid(pids[i], &stat_loc, 0);
+		if (stat_loc != 0)
+			rtn = stat_loc;
+		i++;
+	}
+	free(pids);
 	return (rtn);
 }
