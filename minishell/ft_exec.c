@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 14:33:02 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/26 00:51:20 by joopark          ###   ########.fr       */
+/*   Updated: 2021/02/28 01:32:19 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ pid_t			ft_exec(char *file, char *argv[], char *envp[], int fd[])
 	rtn = fork();
 	if (rtn == 0)
 	{
-		if (fd[0] > 0)
+		if (fd[0] != STDIN_FILENO)
 			io[0] = dup2(fd[0], STDIN_FILENO);
-		if (fd[1] > 0)
+		if (fd[1] != STDOUT_FILENO)
 			io[1] = dup2(fd[1], STDOUT_FILENO);
 		execve(file, argv, envp);
 	}
