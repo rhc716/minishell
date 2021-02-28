@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 16:34:53 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/28 11:51:11 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/01 01:38:43 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int				ft_getfd(char *filename, char mode)
 	return (rtn);
 }
 
+// 리다이렉트 기호를 파싱해서 입/출력 파일을 연 후 인수에 저장한다. 에러시 err에 저장.
 char			*ft_ext_iofd(char *cmd, int *i, int *o, int *err)
 {
 	char		*in;
@@ -58,33 +59,56 @@ char			*ft_ext_iofd(char *cmd, int *i, int *o, int *err)
 	return (cmd);
 }
 
-int				**ft_genpipe(int len)
+// 파이프 배열을 만든다. (배열끼리 파이프로 이어붙임)
+int				**ft_genpipes(int len)
 {
 	int			**rtn;
+	int			i;
 
-	if (len < 2)
-		return (NULL);
-	len = len - 1;
+	i = 0;
 	rtn = malloc(sizeof(int *) * len);
-	while (--len >= 0)
+	if (rtn == NULL)
+		return (NULL);
+	while (i < len)
 	{
-		rtn[len] = malloc(sizeof(int) * 2);
-		if (pipe(rtn[len]) == -1)
+		rtn[i] = malloc(sizeof(int) * 2);
+		if (rtn[i] == NULL)
 			return (NULL);
+		if (i == 0)
+			rtn[i][0] = STDIN_FILENO;
+		if ((i + 1) == len)
+			rtn[i][1] = STDOUT_FILENO;
+		if (i > 0)
+		{
+			if (ft_genpipe(&rtn[i - 1][1], &rtn[i][0]) == -1)
+				return (NULL);
+		}
+		i++;
 	}
 	return (rtn);
 }
 
+// 파이프 하나를 만든다. (pipe 시스템콜이 배열 입력을 강제하여 만듬)
+int				ft_genpipe(int *i, int *o)
+{
+	int			io[2];
+	int			rtn;
+
+	rtn = pipe(io);
+	*i = io[1];
+	*o = io[0];
+	return (rtn);
+}
+
+// 파이프를 닫는다.
 void			ft_closepipe(int **pipe, int len)
 {
-	if (len < 2)
-		return ;
-	len = len - 1;
 	while (--len >= 0)
 	{
-		close(pipe[len][0]);
-		close(pipe[len][1]);
-		free(pipe[len]);
+		if (pipe[len][0] != STDIN_FILENO)
+			close(pipe[len][0]);
+		if (pipe[len][1] != STDOUT_FILENO)
+			close(pipe[len][1]);
 	}
 	free(pipe);
 }

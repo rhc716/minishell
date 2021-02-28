@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:40 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/28 15:38:45 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/01 01:25:26 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void			ft_sigkill(int code);
 pid_t			ft_exec(char *file, char *argv[], char *envp[], int fd[]);
 int				ft_isexecutable(char *file);
 char			*ft_find_exec(char *envp[], char *cmd);
+int				ft_exec_wait(pid_t *pids, int n);
 
 // ft_getline.c
 char			*ft_getline(char **bp);
@@ -69,13 +70,14 @@ void			ft_exit(char *msg, int status);
 // ft_ioctrl.c
 int				ft_getfd(char *filename, char mode);
 char			*ft_ext_iofd(char *cmd, int *i, int *o, int *err);
-int				**ft_genpipe(int len);
+int				**ft_genpipes(int len);
+int				ft_genpipe(int *i, int *o);
 void			ft_closepipe(int **pipe, int len);
 
 // ft_run.c
 void			ft_run(char *cmd, char *envp[]);
 void			ft_run_with_pipe(char *cmd, char *envp[]);
-void			ft_run_cmd(char *cmd, char *envp[], int io[]);
+pid_t			ft_run_cmd(char *cmd, char *envp[], int io[]);
 pid_t			ft_run_exec(char *args[], char *envp[], int io[]);
 
 // ft_builtins.c
