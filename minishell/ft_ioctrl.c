@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 16:34:53 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/26 19:06:56 by joopark          ###   ########.fr       */
+/*   Updated: 2021/02/28 11:51:11 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,35 @@ char			*ft_ext_iofd(char *cmd, int *i, int *o, int *err)
 	if (out != NULL)
 		free(out);
 	return (cmd);
+}
+
+int				**ft_genpipe(int len)
+{
+	int			**rtn;
+
+	if (len < 2)
+		return (NULL);
+	len = len - 1;
+	rtn = malloc(sizeof(int *) * len);
+	while (--len >= 0)
+	{
+		rtn[len] = malloc(sizeof(int) * 2);
+		if (pipe(rtn[len]) == -1)
+			return (NULL);
+	}
+	return (rtn);
+}
+
+void			ft_closepipe(int **pipe, int len)
+{
+	if (len < 2)
+		return ;
+	len = len - 1;
+	while (--len >= 0)
+	{
+		close(pipe[len][0]);
+		close(pipe[len][1]);
+		free(pipe[len]);
+	}
+	free(pipe);
 }
