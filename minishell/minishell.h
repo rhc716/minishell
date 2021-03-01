@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:40 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/01 01:25:26 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/01 18:19:06 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/stat.h>
 # include <sys/errno.h>
 # include <sys/wait.h>
+# include <string.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024
@@ -82,14 +83,14 @@ pid_t			ft_run_exec(char *args[], char *envp[], int io[]);
 
 // ft_builtins.c
 int				ft_check_builtins(char *cmd);
-int				ft_exec_builtins(char **arg, char **envp[]);
+void			ft_exec_builtins(char **arg, char **envp[], int fd[]);
 
 // builtins
 void			ft_cd(char **arg, char *envp[]);
-void			ft_echo(char **arg, char *envp[]);
-void			ft_env(char *envp[]);
-void			ft_export(char **arg, char **envp[]);
-void			ft_pwd(void);
+void			ft_echo(char **arg, char *envp[], int fd[]);
+void			ft_env(char *envp[], int fd[]);
+void			ft_export(char **arg, char **envp[], int fd[]);
+void			ft_pwd(int fd[]);
 void			ft_unset(char **arg, char **envp[]);
 
 // ft_export.c

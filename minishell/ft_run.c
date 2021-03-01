@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_run.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 12:22:59 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/01 01:40:29 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/01 17:51:01 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void			ft_run_with_pipe(char *cmd, char *envp[])
 	i = 0;
 	while (cmds[i] != NULL)
 	{
+		printf("cmd %d : %s\n", i, cmds[i]);
 		pids[i] = ft_run_cmd(cmds[i], envp, pipes[i]);
 		i++;
 	}
@@ -64,7 +65,7 @@ pid_t			ft_run_cmd(char *cmd, char *envp[], int io[])
 	char		**arg;
 	int			ioerr[3];
 
-	printf("[%s] I : %d / O : %d\n", __func__, io[0], io[1]);
+	printf("[%s] I : %d / O : %d / cmd : %s\n", __func__, io[0], io[1], cmd);
 	cmd = ft_parse_replace_inquote(cmd, ' ', (char)0xff);
 	cmd = ft_ext_iofd(cmd, &ioerr[0], &ioerr[1], &ioerr[2]);
 	cmd = ft_parse_replace_quote(cmd, ' ');
@@ -99,7 +100,7 @@ pid_t			ft_run_exec(char *args[], char *envp[], int io[])
 	if (args != NULL && args[0] != NULL)
 	{
 		if (ft_check_builtins(args[0]) == 1)
-			ft_exec_builtins(args, &envp);
+			ft_exec_builtins(args, &envp, io);
 		else if (ft_strrchr(args[0], '/') == NULL)
 		{
 			exec = ft_find_exec(envp, args[0]);

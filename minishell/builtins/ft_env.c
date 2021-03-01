@@ -6,17 +6,17 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 16:38:21 by hroh              #+#    #+#             */
-/*   Updated: 2021/02/26 13:08:00 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/01 17:26:44 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_env(char *envp[])
+void	ft_env(char *envp[], int fd[])
 {
 	int i;
 
 	i = 0;
 	while (envp[i])
-		ft_putendl_fd(envp[i++], 1);
+		ft_putendl_fd(envp[i++], fd[1]);
 }

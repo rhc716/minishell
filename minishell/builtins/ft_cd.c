@@ -6,7 +6,7 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 16:36:56 by hroh              #+#    #+#             */
-/*   Updated: 2021/02/27 17:25:06 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/01 18:31:04 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_cd_home(char *envp[], char *old_pwd)
 	if (chdir(path) == 0)
 		ft_export_pwd(envp, old_pwd);
 	else
-		printf("cd error : There is no $HOME in env.\n"); // error
+		printf("cd error : There is no $HOME in env.\n");
 }
 
 // 환경변수에 저장된 경로로 이동, 실패시 home으로
@@ -51,10 +51,15 @@ void	ft_cd_env(char *path, char *envp[], char *old_pwd)
 // 상대경로 및 절대경로 이동
 void	ft_cd_path(char *path, char *envp[], char *old_pwd)
 {
+	ft_putstr_fd("cd: %s: No such file or directory\n", path);
 	if (chdir(path) == 0)
 		ft_export_pwd(envp, old_pwd);
 	else
-		printf("strerror(2)\n"); // error
+	{
+		ft_putstr_fd("cd: ", 1);
+		ft_putstr_fd(path, 1);
+		ft_putstr_fd(": No such file or directory\n", 1);
+	}
 }
 
 // 이동 성공시 이동한 경로에 맞게 pwd oldpwd 환경변수 수정
@@ -72,6 +77,10 @@ void	ft_cd(char **arg, char *envp[])
 	else if (path[0] == '$')
 		ft_cd_env(path, envp, old_pwd);
 	else
-		printf("strerror(2)\n"); // error
+	{
+		ft_putstr_fd("cd: ", 1);
+		ft_putstr_fd(path, 1);
+		ft_putstr_fd(": No such file or directory\n", 1);
+	}
 	free(old_pwd);
 }
