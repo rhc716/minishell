@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 16:36:56 by hroh              #+#    #+#             */
-/*   Updated: 2021/03/01 18:31:04 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/01 22:42:55 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,16 @@ void	ft_cd_env(char *path, char *envp[], char *old_pwd)
 // 상대경로 및 절대경로 이동
 void	ft_cd_path(char *path, char *envp[], char *old_pwd)
 {
-	ft_putstr_fd("cd: %s: No such file or directory\n", path);
+	ft_putstr_fd("cd: ", 2);
+	ft_putstr_fd(path, 2);
+	ft_putstr_fd(": No such file or directory\n", 2);
 	if (chdir(path) == 0)
 		ft_export_pwd(envp, old_pwd);
 	else
 	{
-		ft_putstr_fd("cd: ", 1);
-		ft_putstr_fd(path, 1);
-		ft_putstr_fd(": No such file or directory\n", 1);
+		ft_putstr_fd("cd: ", 2);
+		ft_putstr_fd(path, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 	}
 }
 
@@ -78,9 +80,9 @@ void	ft_cd(char **arg, char *envp[])
 		ft_cd_env(path, envp, old_pwd);
 	else
 	{
-		ft_putstr_fd("cd: ", 1);
-		ft_putstr_fd(path, 1);
-		ft_putstr_fd(": No such file or directory\n", 1);
+		ft_putstr_fd("cd: ", 2);
+		ft_putstr_fd(path, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 	}
 	free(old_pwd);
 }
