@@ -6,17 +6,17 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 16:38:27 by hroh              #+#    #+#             */
-/*   Updated: 2021/02/25 17:49:21 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/01 17:35:16 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_pwd(void)
+void	ft_pwd(int fd[])
 {
 	char *path;
 
 	path = getcwd(NULL, 0);
-	ft_putendl_fd(path, 1);
+	ft_putendl_fd(path, fd[1]);
 	free(path);
 }

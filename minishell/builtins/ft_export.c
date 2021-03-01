@@ -6,7 +6,7 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 16:38:24 by hroh              #+#    #+#             */
-/*   Updated: 2021/02/27 18:28:55 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/01 18:30:44 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,23 +43,14 @@ void	ft_sort_2d_arr(char **arr)
 }
 
 // 인자가 없을 때 : env 배열을 아스키 순서로 정렬해서 출력
-void	ft_export_no_arg(char *envp[])
+void	ft_export_no_arg(char *envp[], int fd[])
 {
 	char	**temp;
-	int		i;
 
-	i = 0;
-	while (envp[i])
-		i++;
-	if (!(temp = (char **)malloc(sizeof(char *) * (i + 1))))
-		return ;
-	i = -1;
-	while (envp[++i])
-		temp[i] = ft_strdup(envp[i]);
-	temp[i] = NULL;
+	temp = ft_strsdup(envp);
 	ft_sort_2d_arr(temp);
-	ft_env(temp);
-	free(temp);
+	ft_env(temp, fd);
+	ft_strsfree(temp);
 }
 
 // 추가 할 key 값이 가능한 값인지 검사 : 알파벳, 숫자, _로 구성, 숫자로만 구성하면 안됨
@@ -74,7 +65,7 @@ int		ft_isvalid_key(char *key)
 	{
 		if (!ft_isalpha(key[i]) && !ft_isdigit(key[i]) && key[i] != '_')
 		{
-			ft_putstr_fd("export: not valid in this context: ", 1); // error
+			ft_putstr_fd("export: not valid in this context: ", 1);
 			ft_putstr_fd(key, 1);
 			ft_putchar_fd('\n', 1);
 			return (0);
@@ -84,7 +75,7 @@ int		ft_isvalid_key(char *key)
 	}
 	if (alp_or_under == 0)
 	{
-		ft_putstr_fd("export: not an identifier: ", 1); // error
+		ft_putstr_fd("export: not an identifier: ", 1);
 		ft_putstr_fd(key, 1);
 		ft_putchar_fd('\n', 1);
 		return (0);
@@ -104,7 +95,7 @@ void	ft_export_arg(char *key, char *val, char **envp[])
 }
 
 // 주의사항 : export z=x=y : x=y가 저장
-void	ft_export(char **arg, char **envp[])
+void	ft_export(char **arg, char **envp[], int fd[])
 {
 	int		i;
 	char	*argv;
@@ -112,7 +103,7 @@ void	ft_export(char **arg, char **envp[])
 	char	*val;
 
 	if (arg[1] == NULL)
-		ft_export_no_arg(*envp);
+		ft_export_no_arg(*envp, fd);
 	else
 	{
 		i = 0;

@@ -6,7 +6,7 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 15:51:19 by hroh              #+#    #+#             */
-/*   Updated: 2021/02/27 18:45:03 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/01 18:02:14 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,25 +43,26 @@ void	ft_exit_call(char **arg)
 }
 
 // 배열의 첫번째 요소인 builtin 함수를 실행
-int		ft_exec_builtins(char **arg, char **envp[])
+void	ft_exec_builtins(char **arg, char **envp[], int fd[])
 {
 	if (!ft_strncmp(arg[0], "cd", 3))
 		ft_cd(arg, *envp);
 	else if (!ft_strncmp(arg[0], "echo", 5))
-		ft_echo(arg, *envp);
+		ft_echo(arg, *envp, fd);
 	else if (!ft_strncmp(arg[0], "pwd", 4))
-		ft_pwd();
+		ft_pwd(fd);
 	else if (!ft_strncmp(arg[0], "env", 4))
-		ft_env(*envp);
+		ft_env(*envp, fd);
 	else if (!ft_strncmp(arg[0], "export", 7))
-		ft_export(arg, envp);
+		ft_export(arg, envp, fd);
 	else if (!ft_strncmp(arg[0], "unset", 6))
 		ft_unset(arg, envp);
 	else if (!ft_strncmp(arg[0], "exit", 5))
 		ft_exit_call(arg);
-	else
-		return (0);
-	return (1);
+	if (fd[0] != STDIN_FILENO)
+		close(fd[0]);
+	if (fd[1] != STDOUT_FILENO)
+		close(fd[1]);
 }
 
 // 문자열이 builtin 함수인지 검사
