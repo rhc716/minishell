@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:40 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/01 18:19:06 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/01 22:27:24 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,11 @@ void			ft_run(char *cmd, char *envp[]);
 void			ft_run_with_pipe(char *cmd, char *envp[]);
 pid_t			ft_run_cmd(char *cmd, char *envp[], int io[]);
 pid_t			ft_run_exec(char *args[], char *envp[], int io[]);
+
+// ft_console.c
+void			ft_loginmsg(char *file);
+char			*ft_msgstr(char *file);
+void			ft_ansi_escape(int i);
 
 // ft_builtins.c
 int				ft_check_builtins(char *cmd);
