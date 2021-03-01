@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:40 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/01 22:27:24 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/01 23:48:38 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ pid_t			ft_run_cmd(char *cmd, char *envp[], int io[]);
 pid_t			ft_run_exec(char *args[], char *envp[], int io[]);
 
 // ft_console.c
+void			ft_prompt(void);
 void			ft_loginmsg(char *file);
 char			*ft_msgstr(char *file);
 void			ft_ansi_escape(int i);
