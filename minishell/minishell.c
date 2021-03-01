@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:32 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/28 14:53:36 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/01 14:48:13 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int				main(int argc, char *argv[], char *envp[])
 	ft_signal();
 	env = ft_strsdup(envp);
 	bp = NULL;
+	ft_loginmsg("./prompt");
 	while (1)
 	{
 		ft_putstr_fd("\n$> ", 1);

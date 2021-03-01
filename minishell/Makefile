@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+         #
+#    By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/09 01:43:43 by joopark           #+#    #+#              #
-#    Updated: 2021/03/01 18:33:49 by hroh             ###   ########.fr        #
+#    Updated: 2021/03/01 22:27:10 by joopark          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FILES = minishell.c
 FILES += ft_get_next_line.c
-FILES += ft_signal.c ft_exit.c ft_exec.c ft_run.c
+FILES += ft_signal.c ft_exit.c ft_exec.c ft_run.c ft_console.c
 FILES += ft_getline.c ft_envctrl.c ft_parser.c ft_string.c ft_ioctrl.c
 FILES += ./builtins/ft_builtins.c ./builtins/ft_cd.c \
          ./builtins/ft_echo.c  ./builtins/ft_env.c \
