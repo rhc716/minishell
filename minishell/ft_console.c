@@ -6,11 +6,35 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 14:21:07 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/01 22:20:50 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/02 00:06:06 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// 프롬프트를 출력함.
+void			ft_prompt(void)
+{
+	char		*pwd;
+	char		**tokens;
+	int			i;
+
+	i = 0;
+	ft_putstr_fd("\n$ ", 1);
+	pwd = getcwd(NULL, 0);
+	tokens = ft_split(pwd, '/');
+	ft_ansi_escape(5);
+	while (tokens[i] != NULL)
+		i++;
+	if (i == 0)
+		ft_putstr_fd("/", 1);
+	else
+		ft_putstr_fd(tokens[i - 1], 1);
+	ft_ansi_escape(0);
+	ft_putstr_fd(" > ", 1);
+	free(pwd);
+	ft_strsfree(tokens);
+}
 
 // 로그인 메시지를 출력함.
 void			ft_loginmsg(char *file)
