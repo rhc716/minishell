@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:40 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/01 23:48:38 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/02 13:25:17 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024
 # endif
+
+typedef struct	s_com
+{
+	int			status;
+}				t_com;
 
 // ft_get_next_line.c
 char			*ft_getbuf(ssize_t clr, char **bp);
