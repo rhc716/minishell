@@ -6,9 +6,10 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:40 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/02 13:36:03 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/02 18:23:28 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef FT_MINISHELL_H
 # define FT_MINISHELL_H
@@ -21,10 +22,18 @@
 # include <sys/errno.h>
 # include <sys/wait.h>
 # include <string.h>
+# include <stdio.h>
+# include <sys/types.h>
+# include <dirent.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024
 # endif
+
+typedef struct	s_com
+{
+	int			status;
+}				t_com;
 
 // ft_get_next_line.c
 char			*ft_getbuf(ssize_t clr, char **bp);
@@ -93,14 +102,14 @@ int				ft_check_builtins(char *cmd);
 void			ft_exec_builtins(char **arg, char **envp[], int fd[]);
 
 // builtins
-void			ft_cd(char **arg, char *envp[]);
+void			ft_cd(char **arg, char *envp[], int fd[]);
 void			ft_echo(char **arg, char *envp[], int fd[]);
 void			ft_env(char *envp[], int fd[]);
 void			ft_export(char **arg, char **envp[], int fd[]);
 void			ft_pwd(int fd[]);
-void			ft_unset(char **arg, char **envp[]);
+void			ft_unset(char **arg, char **envp[], int fd[]);
 
 // ft_export.c
-void			ft_export_arg(char *key, char *val, char **envp[]);
+int				ft_export_arg(char *key, char *val, char **envp[], int fd[]);
 
 #endif

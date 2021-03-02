@@ -6,39 +6,35 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 15:51:19 by hroh              #+#    #+#             */
-/*   Updated: 2021/03/01 18:02:14 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/02 18:29:24 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 // ft_exit를 호출시 인자에 따라 처리
-// 1. 인자가 없을때 EXIT_SUCCESS로 호출
-// 2. 첫번째 인자가 숫자가 아닌경우 : 종료 및 에러문구 status=255 : 맥에서 테스트시
-// 3. 첫번째 인자가 숫자이고 인자가 2개 이상 : 종료하지 않고 에러문구
-// 4. 인자가 1개이고 숫자
-void	ft_exit_call(char **arg)
+void	ft_exit_call(char **arg, int fd[])
 {
 	int i;
 
 	i = -1;
-	if (arg[1] == NULL)
+	if (arg[1] == NULL && fd[1] == STDOUT_FILENO)
 		ft_exit("exit\n", EXIT_SUCCESS);
 	while (arg[1][++i])
 	{
 		if (ft_isdigit(arg[1][i]) == 0)
 		{
-			ft_putstr_fd("exit: ", 1);
-			ft_putstr_fd(arg[1], 1);
-			ft_exit(": numeric argument required\n", 255);
+			ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+			ft_putstr_fd(arg[1], STDERR_FILENO);
+			ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
+			if (fd[1] == STDOUT_FILENO)
+				ft_exit("", 255);
+			return ;
 		}
 	}
 	if (arg[2])
-	{
-		ft_putstr_fd("exit\nbash: exit: too many arguments\n", 1);
-		return ;
-	}
-	else
+		ft_putstr_fd("exit\nminishell: exit: too many arguments\n", STDERR_FILENO);
+	else if (fd[1] == STDOUT_FILENO)
 		ft_exit("exit\n", ft_atoi(arg[1]));
 }
 
@@ -46,7 +42,7 @@ void	ft_exit_call(char **arg)
 void	ft_exec_builtins(char **arg, char **envp[], int fd[])
 {
 	if (!ft_strncmp(arg[0], "cd", 3))
-		ft_cd(arg, *envp);
+		ft_cd(arg, *envp, fd);
 	else if (!ft_strncmp(arg[0], "echo", 5))
 		ft_echo(arg, *envp, fd);
 	else if (!ft_strncmp(arg[0], "pwd", 4))
@@ -56,9 +52,9 @@ void	ft_exec_builtins(char **arg, char **envp[], int fd[])
 	else if (!ft_strncmp(arg[0], "export", 7))
 		ft_export(arg, envp, fd);
 	else if (!ft_strncmp(arg[0], "unset", 6))
-		ft_unset(arg, envp);
+		ft_unset(arg, envp, fd);
 	else if (!ft_strncmp(arg[0], "exit", 5))
-		ft_exit_call(arg);
+		ft_exit_call(arg, fd);
 	if (fd[0] != STDIN_FILENO)
 		close(fd[0]);
 	if (fd[1] != STDOUT_FILENO)

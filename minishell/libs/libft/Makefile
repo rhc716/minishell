@@ -8,7 +8,7 @@ OBJS = $(FILES:.c=.o)
 BONUS_OBJS = $(BONUS_FILES:.c=.o)
 NAME = libft.a
 COMPILER = gcc
-CFLAGS = -O3 -Wall -Wextra -Werror
+CFLAGS = -O3 -Wall -Wextra #-Werror
 LDFLAGS=-L.
 LDLIBS=-lft
 HEADERPATH = ./
