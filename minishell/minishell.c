@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:32 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/02 19:05:35 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/03 00:55:42 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
+#include <stdio.h>
 
 int				main(int argc, char *argv[], char *envp[])
 {
@@ -32,7 +33,8 @@ int				main(int argc, char *argv[], char *envp[])
 	{
 		ft_prompt();
 		line = ft_getline(&bp);
-		ft_run(line, &env, com);
+		ft_run(line, &env, &com);
+		printf("$? : %d\n", com.status);
 		free(line);
 	}
 	return (0);
