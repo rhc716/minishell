@@ -6,7 +6,7 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 15:51:19 by hroh              #+#    #+#             */
-/*   Updated: 2021/03/02 18:29:24 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/02 19:18:05 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ void	ft_exit_call(char **arg, int fd[])
 }
 
 // 배열의 첫번째 요소인 builtin 함수를 실행
-void	ft_exec_builtins(char **arg, char **envp[], int fd[])
+void	ft_exec_builtins(char **arg, char **envp[], int fd[], t_com com)
 {
 	if (!ft_strncmp(arg[0], "cd", 3))
-		ft_cd(arg, *envp, fd);
+		ft_cd(arg, envp, fd);
 	else if (!ft_strncmp(arg[0], "echo", 5))
 		ft_echo(arg, *envp, fd);
 	else if (!ft_strncmp(arg[0], "pwd", 4))

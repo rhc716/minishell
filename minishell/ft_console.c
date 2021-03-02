@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 14:21:07 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/02 00:06:06 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/02 14:40:04 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,28 +47,26 @@ void			ft_loginmsg(char *file)
 		return ;
 	len = ft_strlen(msg);
 	ft_putstr_fd(msg, 1);
+	free(msg);
 }
 
 // 로그인 메시지 가져옴.
 char			*ft_msgstr(char *file)
 {
 	char		*rtn;
-	char		*line;
-	char		*bp;
-	int			gnl;
+	char		buf[BUFFER_SIZE];
+	int			len;
 	int			fd;
 
 	fd = ft_getfd(file, 'r');
 	if (fd < 1)
 		return (NULL);
-	bp = NULL;
 	rtn = NULL;
 	while (1)
 	{
-		gnl = ft_get_next_line(fd, &line, &bp);
-		line = ft_strnstack(line, "\n", 1);
-		rtn = ft_strnstack(rtn, line, ft_strlen(line));
-		if (gnl == 0)
+		len = read(fd, buf, BUFFER_SIZE);
+		rtn = ft_strnstack(rtn, buf, len);
+		if (len == -1 || len < BUFFER_SIZE)
 			break;
 	}
 	close(fd);

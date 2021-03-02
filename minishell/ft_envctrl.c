@@ -6,7 +6,7 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 22:14:27 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/02 15:16:50 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/02 19:50:01 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ char			*ft_getenv(char *envp[], char *key)
 	while (envp[i] != NULL)
 	{
 		if (ft_strncmp(envp[i], key, ft_strlen(key)) == 0)
-		{
 			return (envp[i] + ft_strlen(key) + 1);
-		}
 		i++;
 	}
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 16:38:24 by hroh              #+#    #+#             */
-/*   Updated: 2021/03/02 18:30:42 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/02 19:47:52 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,18 @@ int		ft_export_arg(char *key, char *val, char **envp[], int fd[])
 		return (0);
 	if (fd[1] != STDOUT_FILENO)
 		return (1);
-	if ((tmp = ft_setenv(*envp, key, val)) != NULL)
+	if (ft_getenv(*envp, key) == NULL)
 	{
-		ft_strsfree(*envp);
-		*envp = tmp;
+		if ((tmp = ft_setenv(*envp, key, val)) != NULL)
+		{
+			ft_strsfree(*envp);
+			*envp = tmp;
+		}
+	}
+	else
+	{
+		if ((tmp = ft_setenv(*envp, key, val)) != NULL)
+			*envp = tmp;
 	}
 	return (1);
 }
