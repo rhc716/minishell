@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_run.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 12:22:59 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/01 17:51:01 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/02 18:17:43 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdio.h>
 
 // 입력된 라인에 대한 명령어를 ; 단위로 나누고 실행
-void			ft_run(char *cmd, char *envp[])
+void			ft_run(char *cmd, char **envp[])
 {
 	char		**cmds;
 	int			i;
@@ -32,7 +32,7 @@ void			ft_run(char *cmd, char *envp[])
 }
 
 // 세미콜론으로 분리된 명령어를 파이프로 나누어진대로 실행
-void			ft_run_with_pipe(char *cmd, char *envp[])
+void			ft_run_with_pipe(char *cmd, char **envp[])
 {
 	pid_t		*pids;
 	char		**cmds;
@@ -59,7 +59,7 @@ void			ft_run_with_pipe(char *cmd, char *envp[])
 }
 
 // 가장 작은 명령어 하나에 대해서 실행
-pid_t			ft_run_cmd(char *cmd, char *envp[], int io[])
+pid_t			ft_run_cmd(char *cmd, char **envp[], int io[])
 {
 	pid_t		rtn;
 	char		**arg;
@@ -86,7 +86,7 @@ pid_t			ft_run_cmd(char *cmd, char *envp[], int io[])
 }
 
 // 가장 작은 바이너리 하나에 대해서 실행
-pid_t			ft_run_exec(char *args[], char *envp[], int io[])
+pid_t			ft_run_exec(char *args[], char **envp[], int io[])
 {
 	char		*exec;
 	char		*tmp;
@@ -100,11 +100,11 @@ pid_t			ft_run_exec(char *args[], char *envp[], int io[])
 	if (args != NULL && args[0] != NULL)
 	{
 		if (ft_check_builtins(args[0]) == 1)
-			ft_exec_builtins(args, &envp, io);
+			ft_exec_builtins(args, envp, io);
 		else if (ft_strrchr(args[0], '/') == NULL)
 		{
-			exec = ft_find_exec(envp, args[0]);
-			rtn = ft_exec(exec, args, envp, io);
+			exec = ft_find_exec(*envp, args[0]);
+			rtn = ft_exec(exec, args, *envp, io);
 			printf("pid1 : %d, pid2 : %d, stat_loc : %d\n", rtn, b, stat_loc);
 		}
 		else
@@ -112,7 +112,7 @@ pid_t			ft_run_exec(char *args[], char *envp[], int io[])
 			tmp = getcwd(NULL, 0);
 			exec = ft_strnstack(tmp, "/", 1);
 			exec = ft_strnstack(exec, args[0], ft_strlen(args[0]));
-			rtn = ft_exec(exec, args, envp, io);
+			rtn = ft_exec(exec, args, *envp, io);
 			printf("pid1 : %d, pid2 : %d, stat_loc : %d\n", rtn, b, stat_loc);
 		}
 	}

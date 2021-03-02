@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:40 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/02 13:25:17 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/02 18:16:39 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ int				ft_genpipe(int *i, int *o);
 void			ft_closepipe(int **pipe, int len);
 
 // ft_run.c
-void			ft_run(char *cmd, char *envp[]);
-void			ft_run_with_pipe(char *cmd, char *envp[]);
-pid_t			ft_run_cmd(char *cmd, char *envp[], int io[]);
-pid_t			ft_run_exec(char *args[], char *envp[], int io[]);
+void			ft_run(char *cmd, char **envp[]);
+void			ft_run_with_pipe(char *cmd, char **envp[]);
+pid_t			ft_run_cmd(char *cmd, char **envp[], int io[]);
+pid_t			ft_run_exec(char *args[], char **envp[], int io[]);
 
 // ft_console.c
 void			ft_prompt(void);
