@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_run.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 12:22:59 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/02 18:57:39 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/02 19:11:14 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 #include <stdio.h>
 
 // 입력된 라인에 대한 명령어를 ; 단위로 나누고 실행
-void			ft_run(char *cmd, char **envp[])
+void			ft_run(char *cmd, char **envp[], t_com com)
 {
 	char		**cmds;
 	int			i;
@@ -25,14 +26,14 @@ void			ft_run(char *cmd, char **envp[])
 	while (cmds[i] != NULL)
 	{
 		printf("[%s] %s\n", __func__, cmds[i]);
-		ft_run_with_pipe(cmds[i], envp);
+		ft_run_with_pipe(cmds[i], envp, com);
 		i++;
 	}
 	ft_strsfree(cmds);
 }
 
 // 세미콜론으로 분리된 명령어를 파이프로 나누어진대로 실행
-void			ft_run_with_pipe(char *cmd, char **envp[])
+void			ft_run_with_pipe(char *cmd, char **envp[], t_com com)
 {
 	pid_t		*pids;
 	char		**cmds;
@@ -50,7 +51,7 @@ void			ft_run_with_pipe(char *cmd, char **envp[])
 	while (cmds[i] != NULL)
 	{
 		printf("cmd %d : %s\n", i, cmds[i]);
-		pids[i] = ft_run_cmd(cmds[i], envp, pipes[i]);
+		pids[i] = ft_run_cmd(cmds[i], envp, pipes[i], com);
 		i++;
 	}
 	ft_exec_wait(pids, i);
@@ -59,7 +60,7 @@ void			ft_run_with_pipe(char *cmd, char **envp[])
 }
 
 // 가장 작은 명령어 하나에 대해서 실행
-pid_t			ft_run_cmd(char *cmd, char **envp[], int io[])
+pid_t			ft_run_cmd(char *cmd, char **envp[], int io[], t_com com)
 {
 	pid_t		rtn;
 	char		*tmp;
@@ -79,7 +80,7 @@ pid_t			ft_run_cmd(char *cmd, char **envp[], int io[])
 		io[0] = ioerr[0];
 	if (ioerr[1] > 0)
 		io[1] = ioerr[1];
-	rtn = ft_run_exec(arg, envp, io);
+	rtn = ft_run_exec(arg, envp, io, com);
 	if (ioerr[0] > 0)
 		close(ioerr[0]);
 	if (ioerr[1] > 0)
@@ -89,7 +90,7 @@ pid_t			ft_run_cmd(char *cmd, char **envp[], int io[])
 }
 
 // 가장 작은 바이너리 하나에 대해서 실행
-pid_t			ft_run_exec(char *args[], char **envp[], int io[])
+pid_t			ft_run_exec(char *args[], char **envp[], int io[], t_com com)
 {
 	char		*exec;
 	char		*tmp;
@@ -103,7 +104,7 @@ pid_t			ft_run_exec(char *args[], char **envp[], int io[])
 	if (args != NULL && args[0] != NULL)
 	{
 		if (ft_check_builtins(args[0]) == 1)
-			ft_exec_builtins(args, envp, io);
+			ft_exec_builtins(args, envp, io, com);
 		else if (ft_strrchr(args[0], '/') == NULL)
 		{
 			exec = ft_find_exec(*envp, args[0]);

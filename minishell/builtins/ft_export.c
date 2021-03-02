@@ -6,12 +6,11 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 16:38:24 by hroh              #+#    #+#             */
-/*   Updated: 2021/03/01 18:30:44 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/02 19:58:52 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include <stdio.h>
 
 // 2차원 char 배열을 버블소트
 void	ft_sort_2d_arr(char **arr)
@@ -46,8 +45,12 @@ void	ft_sort_2d_arr(char **arr)
 void	ft_export_no_arg(char *envp[], int fd[])
 {
 	char	**temp;
+	int		i;
 
 	temp = ft_strsdup(envp);
+	i  = -1;
+	while (temp[++i])
+		temp[i] = ft_strjoin_free("declare -x ", temp[i], 2);
 	ft_sort_2d_arr(temp);
 	ft_env(temp, fd);
 	ft_strsfree(temp);
@@ -64,59 +67,55 @@ int		ft_isvalid_key(char *key)
 	while (key[++i])
 	{
 		if (!ft_isalpha(key[i]) && !ft_isdigit(key[i]) && key[i] != '_')
-		{
-			ft_putstr_fd("export: not valid in this context: ", 1);
-			ft_putstr_fd(key, 1);
-			ft_putchar_fd('\n', 1);
 			return (0);
-		}
 		if (ft_isalpha(key[i]) || key[i] == '_')
 			alp_or_under = 1;
 	}
 	if (alp_or_under == 0)
-	{
-		ft_putstr_fd("export: not an identifier: ", 1);
-		ft_putstr_fd(key, 1);
-		ft_putchar_fd('\n', 1);
 		return (0);
-	}
 	return (1);
 }
 
 // 인자가 존재할 때 : 생성 또는 수정
-void	ft_export_arg(char *key, char *val, char **envp[])
+int		ft_export_arg(char *key, char *val, char **envp[], int fd[])
 {
 	char **tmp;
 
 	if (ft_isvalid_key(key) == 0)
-		return ;
-	if ((tmp = ft_setenv(*envp, key, val)) != NULL)
-		*envp = tmp;
+		return (0);
+	if (fd[1] != STDOUT_FILENO)
+		return (1);
+	if (ft_getenv(*envp, key) == NULL)
+	{
+		if ((tmp = ft_setenv(*envp, key, val)) != NULL)
+		{
+			ft_strsfree(*envp);
+			*envp = tmp;
+		}
+	}
+	else
+	{
+		if ((tmp = ft_setenv(*envp, key, val)) != NULL)
+			*envp = tmp;
+	}
+	return (1);
 }
 
-// 주의사항 : export z=x=y : x=y가 저장
 void	ft_export(char **arg, char **envp[], int fd[])
 {
-	int		i;
-	char	*argv;
-	char	*key;
-	char	*val;
+	char	**key_val;
 
 	if (arg[1] == NULL)
 		ft_export_no_arg(*envp, fd);
 	else
 	{
-		i = 0;
-		while (arg[1][i] && arg[1][i] != '=')
-			i++;
-		if (i == (int)ft_strlen(arg[1]) || i == 0)
-			return ;
-		argv = ft_strdup(arg[1]);
-		argv[i] = '\0';
-		key = argv;
-		val = argv + i + 1;
-		if (val != NULL)
-			ft_export_arg(key, val, envp);
-		free(argv);
+		key_val = ft_split(arg[1], '=');
+		if (key_val[1] == NULL || ft_export_arg(key_val[0], key_val[1], envp, fd) == 0)
+		{
+			ft_putstr_fd("minishell: export: \'", STDERR_FILENO);
+			ft_putstr_fd(arg[1], STDERR_FILENO);
+			ft_putstr_fd("\': not an identifier\n", STDERR_FILENO);
+		}
+		ft_strsfree(key_val);
 	}
 }

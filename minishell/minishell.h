@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:40 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/02 18:45:41 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/02 19:18:19 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 # include <sys/errno.h>
 # include <sys/wait.h>
 # include <string.h>
+# include <stdio.h>
+# include <sys/types.h>
+# include <dirent.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024
@@ -72,6 +75,7 @@ char			*ft_strnstack(char *stack, char *str, size_t n);
 char			**ft_strsdup(char *str[]);
 void			ft_strsfree(char *str[]);
 int				ft_getword(char *str, char **word);
+char			*ft_strjoin_free(char *s1, char *s2, int free_case);
 
 // ft_exit.c
 void			ft_exit(char *msg, int status);
@@ -84,10 +88,10 @@ int				ft_genpipe(int *i, int *o);
 void			ft_closepipe(int **pipe, int len);
 
 // ft_run.c
-void			ft_run(char *cmd, char **envp[]);
-void			ft_run_with_pipe(char *cmd, char **envp[]);
-pid_t			ft_run_cmd(char *cmd, char **envp[], int io[]);
-pid_t			ft_run_exec(char *args[], char **envp[], int io[]);
+void			ft_run(char *cmd, char **envp[], t_com com);
+void			ft_run_with_pipe(char *cmd, char **envp[], t_com com);
+pid_t			ft_run_cmd(char *cmd, char **envp[], int io[], t_com com);
+pid_t			ft_run_exec(char *args[], char **envp[], int io[], t_com com);
 
 // ft_console.c
 void			ft_prompt(void);
@@ -97,17 +101,17 @@ void			ft_ansi_escape(int i);
 
 // ft_builtins.c
 int				ft_check_builtins(char *cmd);
-void			ft_exec_builtins(char **arg, char **envp[], int fd[]);
+void			ft_exec_builtins(char **arg, char **envp[], int fd[], t_com com);
 
 // builtins
-void			ft_cd(char **arg, char *envp[]);
+void			ft_cd(char **arg, char **envp[], int fd[]);
 void			ft_echo(char **arg, char *envp[], int fd[]);
 void			ft_env(char *envp[], int fd[]);
 void			ft_export(char **arg, char **envp[], int fd[]);
 void			ft_pwd(int fd[]);
-void			ft_unset(char **arg, char **envp[]);
+void			ft_unset(char **arg, char **envp[], int fd[]);
 
 // ft_export.c
-void			ft_export_arg(char *key, char *val, char **envp[]);
+int				ft_export_arg(char *key, char *val, char **envp[], int fd[]);
 
 #endif

@@ -3,14 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_string.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 20:50:25 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/27 01:57:27 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/02 13:35:48 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// ft_strjoin에 free 기능 추가
+char	*ft_strjoin_free(char *s1, char *s2, int free_case)
+{
+	char	*re;
+	size_t	s1_len;
+	size_t	s2_len;
+
+	if (!(s1) && !(s2))
+		return (NULL);
+	else if (!(s1) || !(s2))
+		return (!(s1) ? ft_strdup(s2) : ft_strdup(s1));
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	if (!(re = (char *)malloc(sizeof(char) * (s1_len + s2_len + 1))))
+		return (NULL);
+	ft_strlcpy(re, s1, s1_len + 1);
+	if (free_case == 1 || free_case == 3)
+		free(s1);
+	ft_strlcpy(re + s1_len, s2, s2_len + 1);
+	if (free_case == 2 || free_case == 3)
+		free(s2);
+	return (re);
+}
+
 
 // 문자열 합치는 함수
 char				*ft_strnstack(char *stack, char *str, size_t n)

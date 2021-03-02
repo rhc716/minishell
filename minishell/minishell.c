@@ -3,23 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:32 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/02 18:17:03 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/02 19:05:35 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "minishell.h"
-#include <stdio.h>
-#include <string.h>
 
 int				main(int argc, char *argv[], char *envp[])
 {
 	char		**env;
 	char		*bp;
 	char		*line;
-	t_com		com; // 구조체
+	t_com		com;
 
 	(void) argc;
 	(void) argv;
@@ -33,7 +32,7 @@ int				main(int argc, char *argv[], char *envp[])
 	{
 		ft_prompt();
 		line = ft_getline(&bp);
-		ft_run(line, &env);
+		ft_run(line, &env, com);
 		free(line);
 	}
 	return (0);
