@@ -6,7 +6,7 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 16:38:17 by hroh              #+#    #+#             */
-/*   Updated: 2021/03/02 19:58:47 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/02 20:09:35 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_echo(char **arg, char *envp[], int fd[])
 
 	i = 1;
 	option_n = 0;
-	if ((option_n = ft_check_option_n(arg[1])) == 1)
+	if (arg[1] && (option_n = ft_check_option_n(arg[1])) == 1)
 		i++;
 	while (arg[i])
 	{
