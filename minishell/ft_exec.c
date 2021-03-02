@@ -6,12 +6,11 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 14:33:02 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/01 00:38:37 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/03 01:06:13 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdio.h>
 
 // 파일경로, 아규먼트, 환경변수를 받아 프로세스를 실행하여 자식 프로세스의 PID를 리턴 (free 필요없음)
 pid_t			ft_exec(char *file, char *argv[], char *envp[], int fd[])
@@ -91,9 +90,10 @@ int				ft_exec_wait(pid_t *pids, int n)
 	i = 0;
 	while (i < n)
 	{
-		tmp = waitpid(pids[i], &stat_loc, 0);
-		if (stat_loc != 0)
-			rtn = stat_loc;
+		if (pids[i] > 0)
+			tmp = waitpid(pids[i], &stat_loc, 0);
+			rtn = ((stat_loc >> 8) & 0x000000ff);
+			//rtn = WEXITSTATUS(stat_loc);
 		i++;
 	}
 	free(pids);
