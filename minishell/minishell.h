@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:40 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/02 19:18:19 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/03 00:42:32 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,10 @@ int				ft_genpipe(int *i, int *o);
 void			ft_closepipe(int **pipe, int len);
 
 // ft_run.c
-void			ft_run(char *cmd, char **envp[], t_com com);
-void			ft_run_with_pipe(char *cmd, char **envp[], t_com com);
-pid_t			ft_run_cmd(char *cmd, char **envp[], int io[], t_com com);
-pid_t			ft_run_exec(char *args[], char **envp[], int io[], t_com com);
+void			ft_run(char *cmd, char **envp[], t_com *com);
+void			ft_run_with_pipe(char *cmd, char **envp[], t_com *com);
+pid_t			ft_run_cmd(char *cmd, char **envp[], int io[], t_com *com);
+pid_t			ft_run_exec(char *args[], char **envp[], int io[], t_com *com);
 
 // ft_console.c
 void			ft_prompt(void);
@@ -101,7 +101,7 @@ void			ft_ansi_escape(int i);
 
 // ft_builtins.c
 int				ft_check_builtins(char *cmd);
-void			ft_exec_builtins(char **arg, char **envp[], int fd[], t_com com);
+void			ft_exec_builtins(char **arg, char **envp[], int fd[], t_com *com);
 
 // builtins
 void			ft_cd(char **arg, char **envp[], int fd[]);

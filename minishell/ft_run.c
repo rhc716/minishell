@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_run.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 12:22:59 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/02 19:11:14 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/03 00:43:03 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdio.h>
 
 // 입력된 라인에 대한 명령어를 ; 단위로 나누고 실행
-void			ft_run(char *cmd, char **envp[], t_com com)
+void			ft_run(char *cmd, char **envp[], t_com *com)
 {
 	char		**cmds;
 	int			i;
@@ -33,7 +33,7 @@ void			ft_run(char *cmd, char **envp[], t_com com)
 }
 
 // 세미콜론으로 분리된 명령어를 파이프로 나누어진대로 실행
-void			ft_run_with_pipe(char *cmd, char **envp[], t_com com)
+void			ft_run_with_pipe(char *cmd, char **envp[], t_com *com)
 {
 	pid_t		*pids;
 	char		**cmds;
@@ -60,7 +60,7 @@ void			ft_run_with_pipe(char *cmd, char **envp[], t_com com)
 }
 
 // 가장 작은 명령어 하나에 대해서 실행
-pid_t			ft_run_cmd(char *cmd, char **envp[], int io[], t_com com)
+pid_t			ft_run_cmd(char *cmd, char **envp[], int io[], t_com *com)
 {
 	pid_t		rtn;
 	char		*tmp;
@@ -90,7 +90,7 @@ pid_t			ft_run_cmd(char *cmd, char **envp[], int io[], t_com com)
 }
 
 // 가장 작은 바이너리 하나에 대해서 실행
-pid_t			ft_run_exec(char *args[], char **envp[], int io[], t_com com)
+pid_t			ft_run_exec(char *args[], char **envp[], int io[], t_com *com)
 {
 	char		*exec;
 	char		*tmp;
