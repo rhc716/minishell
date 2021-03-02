@@ -6,7 +6,7 @@
 #    By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/09 01:43:43 by joopark           #+#    #+#              #
-#    Updated: 2021/03/02 19:11:43 by hroh             ###   ########.fr        #
+#    Updated: 2021/03/02 19:58:02 by hroh             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ FILES += ./builtins/ft_builtins.c ./builtins/ft_cd.c \
 OBJS = ${FILES:%.c=%.o}
 NAME = minishell
 COMPILER = gcc
-CFLAGS = -fsanitize=address -g -Wall -Wextra #-Werror
+CFLAGS = -fsanitize=address -g -Wall -Wextra -Werror
 CLFLAGS = -lft
 HEADERPATH = ./
 LIBFTPATH = ./libs/libft
