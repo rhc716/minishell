@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 12:22:59 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/02 18:17:43 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/02 18:57:39 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,17 @@ void			ft_run_with_pipe(char *cmd, char **envp[])
 pid_t			ft_run_cmd(char *cmd, char **envp[], int io[])
 {
 	pid_t		rtn;
+	char		*tmp;
 	char		**arg;
 	int			ioerr[3];
 
-	printf("[%s] I : %d / O : %d / cmd : %s\n", __func__, io[0], io[1], cmd);
-	cmd = ft_parse_replace_inquote(cmd, ' ', (char)0xff);
-	cmd = ft_ext_iofd(cmd, &ioerr[0], &ioerr[1], &ioerr[2]);
-	cmd = ft_parse_replace_quote(cmd, ' ');
-	arg = ft_parse_split(cmd, ' ', (char)0xff, ' ');
+	tmp = ft_strdup(cmd);
+	tmp = ft_parse_replace_inquote(tmp, ' ', (char)0xff);
+	tmp = ft_ext_iofd(tmp, &ioerr[0], &ioerr[1], &ioerr[2]);
+	tmp = ft_quote_remove(tmp);
+	arg = ft_parse_split(tmp, ' ', (char)0xff, ' ');
+	printf("[%s] I : %d / O : %d / cmd : %s\n", __func__, io[0], io[1], tmp);
+	free(tmp);
 	if (ioerr[0] < 0 || ioerr[1] < 0)
 		write(1, "error\n", 6);
 	if (ioerr[0] > 0)
