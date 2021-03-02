@@ -6,7 +6,7 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 16:38:24 by hroh              #+#    #+#             */
-/*   Updated: 2021/03/01 18:30:44 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/02 13:37:14 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,12 @@ void	ft_sort_2d_arr(char **arr)
 void	ft_export_no_arg(char *envp[], int fd[])
 {
 	char	**temp;
+	int		i;
 
 	temp = ft_strsdup(envp);
+	i  = -1;
+	while (temp[++i])
+		temp[i] = ft_strjoin_free("declare -x ", temp[i], 2);
 	ft_sort_2d_arr(temp);
 	ft_env(temp, fd);
 	ft_strsfree(temp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:40 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/01 23:48:38 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/02 13:36:03 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ char			*ft_strnstack(char *stack, char *str, size_t n);
 char			**ft_strsdup(char *str[]);
 void			ft_strsfree(char *str[]);
 int				ft_getword(char *str, char **word);
+char			*ft_strjoin_free(char *s1, char *s2, int free_case);
 
 // ft_exit.c
 void			ft_exit(char *msg, int status);
