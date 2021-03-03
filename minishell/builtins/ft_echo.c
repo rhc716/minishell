@@ -6,7 +6,7 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 16:38:17 by hroh              #+#    #+#             */
-/*   Updated: 2021/03/02 20:09:35 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/03 16:41:26 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ int		ft_check_option_n(char *arg)
 }
 
 // 환경변수 출력, 및 echo $? 출력
-void	ft_echo_env(char *env_key, char *envp[], int fd[])
+void	ft_echo_env(char *env_key, char *envp[], int fd[], t_com *com)
 {
 	if (*env_key == '?')
-		ft_putstr_fd("exit_status", fd[1]); // 추가 필요
+		ft_putnbr_fd(com->status, fd[1]);
 	if (*env_key != '?')
 		ft_putstr_fd(ft_getenv(envp, env_key), fd[1]);
 }
 
-void	ft_echo(char **arg, char *envp[], int fd[])
+int		ft_echo(char **arg, char *envp[], int fd[], t_com *com)
 {
 	int	i;
 	int	option_n;
@@ -47,7 +47,7 @@ void	ft_echo(char **arg, char *envp[], int fd[])
 	while (arg[i])
 	{
 		if (arg[i][0] == '$')
-			ft_echo_env(arg[i] + 1, envp, fd);
+			ft_echo_env(arg[i] + 1, envp, fd, com);
 		else
 			ft_putstr_fd(arg[i], fd[1]);
 		if (arg[i + 1] != NULL)
@@ -56,4 +56,5 @@ void	ft_echo(char **arg, char *envp[], int fd[])
 	}
 	if (option_n != 1)
 		ft_putchar_fd('\n', fd[1]);
+	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/09 01:43:43 by joopark           #+#    #+#              #
-#    Updated: 2021/03/02 20:10:10 by hroh             ###   ########.fr        #
+#    Updated: 2021/03/03 17:51:07 by hroh             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ FILES += ft_getline.c ft_envctrl.c ft_parser.c ft_string.c ft_ioctrl.c
 FILES += ./builtins/ft_builtins.c ./builtins/ft_cd.c \
          ./builtins/ft_echo.c  ./builtins/ft_env.c \
 		 ./builtins/ft_export.c  ./builtins/ft_pwd.c \
-		 ./builtins/ft_unset.c
+		 ./builtins/ft_unset.c ./builtins/ft_builtins_util.c 
 OBJS = ${FILES:%.c=%.o}
 NAME = minishell
 COMPILER = gcc

@@ -3,63 +3,81 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtins.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 15:51:19 by hroh              #+#    #+#             */
-/*   Updated: 2021/03/03 00:42:40 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/03 17:49:40 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-// ft_exit를 호출시 인자에 따라 처리
-void	ft_exit_call(char **arg, int fd[])
+int		ft_exit_call_2(char **arg, int fd[])
 {
 	int i;
 
 	i = -1;
 	if (arg[1] == NULL && fd[1] == STDOUT_FILENO)
 		ft_exit("exit\n", EXIT_SUCCESS);
-	while (arg[1][++i])
+	while (arg[1] && arg[1][++i])
 	{
 		if (ft_isdigit(arg[1][i]) == 0)
 		{
+			if (fd[1] == STDOUT_FILENO)
+				ft_putstr_fd("exit\n", STDERR_FILENO);	
 			ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
 			ft_putstr_fd(arg[1], STDERR_FILENO);
 			ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
 			if (fd[1] == STDOUT_FILENO)
 				ft_exit("", 255);
-			return ;
+			return (255);
 		}
 	}
-	if (arg[2])
-		ft_putstr_fd("exit\nminishell: exit: too many arguments\n", STDERR_FILENO);
+	return (0);
+}
+
+// ft_exit를 호출시 인자에 따라 처리
+int		ft_exit_call(char **arg, int fd[])
+{
+	if (ft_exit_call_2(arg, fd) == 255)
+		return (255);
+	if (arg[1] && arg[2])
+	{
+		if (fd[1] == STDOUT_FILENO)
+			ft_putstr_fd("exit\n", STDERR_FILENO);
+		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
+		return (1);
+	}
 	else if (fd[1] == STDOUT_FILENO)
 		ft_exit("exit\n", ft_atoi(arg[1]));
+	return (0);
 }
 
 // 배열의 첫번째 요소인 builtin 함수를 실행
 void	ft_exec_builtins(char **arg, char **envp[], int fd[], t_com *com)
 {
-	(void) com;
+	int ret;
+
+	ret = 0;
 	if (!ft_strncmp(arg[0], "cd", 3))
-		ft_cd(arg, envp, fd);
+		ret = ft_cd(arg, envp, fd);
 	else if (!ft_strncmp(arg[0], "echo", 5))
-		ft_echo(arg, *envp, fd);
+		ret = ft_echo(arg, *envp, fd, com);
 	else if (!ft_strncmp(arg[0], "pwd", 4))
-		ft_pwd(fd);
+		ret = ft_pwd(fd);
 	else if (!ft_strncmp(arg[0], "env", 4))
-		ft_env(*envp, fd);
+		ret = ft_env(*envp, fd);
 	else if (!ft_strncmp(arg[0], "export", 7))
-		ft_export(arg, envp, fd);
+		ret = ft_export(arg, envp, fd);
 	else if (!ft_strncmp(arg[0], "unset", 6))
-		ft_unset(arg, envp, fd);
+		ret = ft_unset(arg, envp, fd);
 	else if (!ft_strncmp(arg[0], "exit", 5))
-		ft_exit_call(arg, fd);
+		ret = ft_exit_call(arg, fd);
 	if (fd[0] != STDIN_FILENO)
 		close(fd[0]);
 	if (fd[1] != STDOUT_FILENO)
 		close(fd[1]);
+	com->status = ret;
 }
 
 // 문자열이 builtin 함수인지 검사

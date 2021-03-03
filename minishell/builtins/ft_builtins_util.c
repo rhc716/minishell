@@ -1,23 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   ft_builtins_util.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/24 16:38:27 by hroh              #+#    #+#             */
-/*   Updated: 2021/03/03 16:18:04 by hroh             ###   ########.fr       */
+/*   Created: 2021/03/03 15:30:51 by hroh              #+#    #+#             */
+/*   Updated: 2021/03/03 17:32:25 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
-
-int		ft_pwd(int fd[])
+// 2차원 char 배열을 버블소트
+void	ft_sort_2d_arr(char **arr)
 {
-	char *path;
+	int		i;
+	int		j;
+	int		k;
+	char	*temp;
 
-	path = getcwd(NULL, 0);
-	ft_putendl_fd(path, fd[1]);
-	free(path);
-	return (0);
+	i = -1;
+	while (arr[++i])
+	{
+		j = -1;
+		while (arr[++j + 1])
+		{
+			k = -1;
+			while (arr[j][++k] && arr[j + 1][k] && arr[j][k] >= arr[j + 1][k])
+			{
+				if (arr[j][k] > arr[j + 1][k])
+				{
+					temp = arr[j + 1];
+					arr[j + 1] = arr[j];
+					arr[j] = temp;
+					break ;
+				}
+			}
+		}
+	}
 }

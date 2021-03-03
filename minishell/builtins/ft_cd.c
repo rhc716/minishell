@@ -6,7 +6,7 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 16:36:56 by hroh              #+#    #+#             */
-/*   Updated: 2021/03/02 19:58:44 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/03 16:54:37 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	ft_cd_env(char *path, char **envp[], char *old_pwd, int fd[])
 }
 
 // 상대경로 및 절대경로 이동
-void	ft_cd_path(char *path, char **envp[], char *old_pwd, int fd[])
+int		ft_cd_path(char *path, char **envp[], char *old_pwd, int fd[])
 {
 	DIR	*dir;
 
@@ -76,17 +76,19 @@ void	ft_cd_path(char *path, char **envp[], char *old_pwd, int fd[])
 				ft_export_pwd(envp, old_pwd, fd);
 		}
 		closedir(dir);
+		return (0);
 	}
 	else
 	{
 		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
 		ft_putstr_fd(path, STDERR_FILENO);
 		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+		return (1);
 	}
 }
 
 // 이동 성공시 이동한 경로에 맞게 pwd oldpwd 환경변수 수정
-void	ft_cd(char **arg, char **envp[], int fd[])
+int		ft_cd(char **arg, char **envp[], int fd[])
 {
 	char	*path;
 	char	*old_pwd;
@@ -94,7 +96,7 @@ void	ft_cd(char **arg, char **envp[], int fd[])
 	path = arg[1];
 	old_pwd = getcwd(NULL, 0);
 	if (path != NULL && path[0] != '~' && path[0] != '$')
-		ft_cd_path(path, envp, old_pwd, fd);
+		return (ft_cd_path(path, envp, old_pwd, fd));
 	else if (path == NULL || (path[0] == '~' && path[1] == '\0'))
 		ft_cd_home(envp, old_pwd, fd);
 	else if (path[0] == '$')
@@ -104,6 +106,8 @@ void	ft_cd(char **arg, char **envp[], int fd[])
 		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
 		ft_putstr_fd(path, STDERR_FILENO);
 		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+		return (1);
 	}
 	free(old_pwd);
+	return (0);
 }
