@@ -6,13 +6,13 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 12:22:59 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/03 01:05:39 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/04 02:34:46 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
-//#include <stdio.h>
+#include <stdio.h>
 
 // 입력된 라인에 대한 명령어를 ; 단위로 나누고 실행
 void			ft_run(char *cmd, char **envp[], t_com *com)
@@ -67,20 +67,19 @@ pid_t			ft_run_cmd(char *cmd, char **envp[], int io[], t_com *com)
 	char		**arg;
 	int			ioerr[3];
 
-	tmp = ft_strdup(cmd);
-	tmp = ft_parse_replace_inquote(tmp, ' ', (char)0xff);
+	tmp = ft_parse_replace_inquote(ft_strdup(cmd), ' ', (char)0xff);
 	tmp = ft_ext_iofd(tmp, &ioerr[0], &ioerr[1], &ioerr[2]);
 	tmp = ft_quote_remove(tmp);
 	arg = ft_parse_split(tmp, ' ', (char)0xff, ' ');
-	//printf("[%s] I : %d / O : %d / cmd : %s\n", __func__, io[0], io[1], tmp);
 	free(tmp);
-	if (ioerr[0] < 0 || ioerr[1] < 0)
-		write(1, "error\n", 6);
 	if (ioerr[0] > 0)
 		io[0] = ioerr[0];
 	if (ioerr[1] > 0)
 		io[1] = ioerr[1];
-	rtn = ft_run_exec(arg, envp, io, com);
+	if (ioerr[2] == 0)
+		rtn = ft_run_exec(arg, envp, io, com);
+	else
+		rtn = -1;
 	if (ioerr[0] > 0)
 		close(ioerr[0]);
 	if (ioerr[1] > 0)
@@ -93,31 +92,28 @@ pid_t			ft_run_cmd(char *cmd, char **envp[], int io[], t_com *com)
 pid_t			ft_run_exec(char *args[], char **envp[], int io[], t_com *com)
 {
 	char		*exec;
-	char		*tmp;
 	pid_t		rtn;
-	pid_t		b;
 	int			stat_loc;
 
-	b = -1;
 	stat_loc = -1;
 	rtn = 0;
 	if (args != NULL && args[0] != NULL)
 	{
 		if (ft_check_builtins(args[0]) == 1)
 			ft_exec_builtins(args, envp, io, com);
-		else if (ft_strrchr(args[0], '/') == NULL)
-		{
-			exec = ft_find_exec(*envp, args[0]);
-			rtn = ft_exec(exec, args, *envp, io);
-			//printf("pid : %d\n", rtn);
-		}
 		else
 		{
-			tmp = getcwd(NULL, 0);
-			exec = ft_strnstack(tmp, "/", 1);
-			exec = ft_strnstack(exec, args[0], ft_strlen(args[0]));
-			rtn = ft_exec(exec, args, *envp, io);
-			//printf("pid : %d\n", rtn);
+			exec = ft_find_exec(*envp, args[0]);
+			if (exec != NULL)
+				rtn = ft_exec(exec, args, *envp, io);
+			else
+			{
+				ft_putstr_fd("minishell: ", STDERR_FILENO);
+				ft_putstr_fd(args[0], STDERR_FILENO);
+				ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+				rtn = -127;
+			}
+			free(exec);
 		}
 	}
 	return (rtn);
