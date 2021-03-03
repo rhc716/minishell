@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 18:27:32 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/02 18:45:17 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/04 02:28:46 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ char			*ft_quote_remove(char *str)
 		str = ft_strnstack(str, split[i], ft_strlen(split[i]));
 		i++;
 	}
+	ft_strsfree(split);
 	return (str);
 }
 

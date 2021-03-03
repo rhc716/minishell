@@ -6,13 +6,13 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 16:34:53 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/01 01:38:43 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/04 02:32:00 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// 파일명으로부터 파일 디스크립터를 얻는 함수 (에러시 에러넘버 음수로 반환)
+// 파일명으로부터 파일 디스크립터를 얻는 함수 (에러시 표준에러 출력에 에러 출력 및 에러번호 리턴)
 int				ft_getfd(char *filename, char mode)
 {
 	int			rtn;
@@ -26,7 +26,12 @@ int				ft_getfd(char *filename, char mode)
 	else
 		rtn = 0;
 	if (rtn == -1)
+	{
 		rtn *= errno;
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd(filename, STDERR_FILENO);
+		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+	}
 	return (rtn);
 }
 
@@ -109,6 +114,7 @@ void			ft_closepipe(int **pipe, int len)
 			close(pipe[len][0]);
 		if (pipe[len][1] != STDOUT_FILENO)
 			close(pipe[len][1]);
+		free(pipe[len]);
 	}
 	free(pipe);
 }

@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 14:33:02 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/03 01:06:13 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/04 01:37:05 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,10 @@ int				ft_isexecutable(char *file)
 }
 
 // env 내의 PATH 중 실행 가능한 명령어 찾기. 실행 가능하면 파일경로 리턴 (free 필요)
-char			*ft_find_exec(char *envp[], char *cmd)
+char			*ft_find_exec_path(char *envp[], char *cmd)
 {
 	char		*rtn;
 	char		**paths;
-	char		*pathtmp;
-	char		*pathtmp1;
 	int			j;
 	
 	j = 0;
@@ -64,17 +62,38 @@ char			*ft_find_exec(char *envp[], char *cmd)
 		return (NULL);
 	while (paths[j] != NULL)
 	{
-		pathtmp1 = ft_strjoin(paths[j], "/");
-		pathtmp = ft_strjoin(pathtmp1, cmd);
-		if (ft_isexecutable(pathtmp) == 1 && rtn == NULL)
-			rtn = pathtmp;
+		paths[j] = ft_strnstack(paths[j], "/", 1);
+		paths[j] = ft_strnstack(paths[j], cmd, ft_strlen(cmd));
+		if (ft_isexecutable(paths[j]) == 1 && rtn == NULL)
+			rtn = paths[j];
 		else
-			free(pathtmp);
-		free(pathtmp1);
-		free(paths[j]);
+			free(paths[j]);
 		j++;
 	}
 	free(paths[j]);
+	free(paths);
+	return (rtn);
+}
+
+// 실행 가능하면 파일경로 리턴, 불가능하면 NULL 리턴 (free 필요)
+char			*ft_find_exec(char *envp[], char *cmd)
+{
+	char		*rtn;
+	char		*tmp;
+
+	if (ft_strrchr(cmd, '/') == NULL)
+		rtn = ft_find_exec_path(envp, cmd);
+	else
+	{
+		tmp = getcwd(NULL, 0);
+		rtn = ft_strnstack(tmp, "/", 1);
+		rtn = ft_strnstack(rtn, cmd, ft_strlen(cmd));
+		if (ft_isexecutable(rtn) != 1)
+		{
+			free(rtn);
+			rtn = NULL;
+		}
+	}
 	return (rtn);
 }
 
@@ -91,9 +110,12 @@ int				ft_exec_wait(pid_t *pids, int n)
 	while (i < n)
 	{
 		if (pids[i] > 0)
+		{
 			tmp = waitpid(pids[i], &stat_loc, 0);
-			rtn = ((stat_loc >> 8) & 0x000000ff);
-			//rtn = WEXITSTATUS(stat_loc);
+			rtn = ((stat_loc >> 8) & 0x000000ff); //rtn = WEXITSTATUS(stat_loc);
+		}
+		else if (pids[i] < 0)
+			rtn = pids[i] * -1;
 		i++;
 	}
 	free(pids);
