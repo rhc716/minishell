@@ -6,17 +6,17 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 20:50:25 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/04 15:15:45 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/04 15:59:23 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_strjoin_free(char *s1, char *s2, int free_case)
+char				*ft_strjoin_free(char *s1, char *s2, int free_case)
 {
-	char	*re;
-	size_t	s1_len;
-	size_t	s2_len;
+	char			*re;
+	size_t			s1_len;
+	size_t			s2_len;
 
 	if (!(s1) && !(s2))
 		return (NULL);
@@ -60,10 +60,10 @@ char				*ft_strnstack(char *stack, char *str, size_t n)
 	return (rtn);
 }
 
-char			**ft_strsdup(char *str[])
+char				**ft_strsdup(char *str[])
 {
-	char		**rtn;
-	int			i;
+	char			**rtn;
+	int				i;
 
 	i = 0;
 	while (str[i] != NULL)
@@ -82,9 +82,9 @@ char			**ft_strsdup(char *str[])
 	return (rtn);
 }
 
-void			ft_strsfree(char *str[])
+void				ft_strsfree(char *str[])
 {
-	int			i;
+	int				i;
 
 	i = 0;
 	while (str[i] != NULL)
@@ -98,11 +98,11 @@ void			ft_strsfree(char *str[])
 	free(str);
 }
 
-int				ft_getword(char *str, char **word)
+int					ft_getword(char *str, char **word)
 {
-	int			rtn;
-	int			start;
-	char		*tmp;
+	int				rtn;
+	int				start;
+	char			*tmp;
 
 	rtn = 0;
 	while (str[rtn] != '\0' && str[rtn] == ' ')

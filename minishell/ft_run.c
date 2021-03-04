@@ -6,13 +6,11 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 12:22:59 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/04 15:15:16 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/04 15:57:41 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
-#include <stdio.h>
 
 void			ft_run(char *cmd, char **envp[], t_com *com)
 {
@@ -102,9 +100,8 @@ pid_t			ft_run_exec(char *args[], char **envp[], int io[], t_com *com)
 				rtn = ft_exec(exec, args, *envp, io);
 			else
 			{
-				ft_putstr_fd("minishell: ", STDERR_FILENO);
-				ft_putstr_fd(args[0], STDERR_FILENO);
-				ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+				ft_put_err_msg("minishell: ", args[0],
+					": No such file or directory\n", STDERR_FILENO);
 				rtn = -127;
 			}
 			free(exec);

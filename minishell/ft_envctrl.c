@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 22:14:27 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/04 15:12:26 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/04 15:54:32 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,17 +98,15 @@ char			**ft_clearenv(char *envp[], char *key)
 	rtn = malloc(sizeof(char *) * i);
 	if (rtn == NULL)
 		return (NULL);
-	i = 0;
+	i = -1;
 	j = -1;
-	len = ft_strlen(key);
-	while (envp[i] != NULL)
+	while (envp[++i] != NULL)
 	{
 		len = 0;
 		while (envp[i][len] != '\0' && envp[i][len] != '=')
 			len++;
 		if (!(ft_strncmp(envp[i], key, len) == 0 && envp[i][len] == '='))
 			rtn[++j] = ft_strdup(envp[i]);
-		i++;
 	}
 	rtn[++j] = NULL;
 	return (rtn);

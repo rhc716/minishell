@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:40 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/04 15:20:23 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/04 16:00:35 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ void			ft_loginmsg(char *file);
 char			*ft_msgstr(char *file);
 void			ft_ansi_escape(int i, int fd);
 int				ft_check_builtins(char *cmd);
-void			ft_exec_builtins(char **arg, char **envp[], int fd[], t_com *com);
+void			ft_exec_builtins(char **arg, char **envp[],
+		int fd[], t_com *com);
 int				ft_cd(char **arg, char **envp[], int fd[]);
 int				ft_echo(char **arg, char *envp[], int fd[], t_com *com);
 int				ft_env(char *envp[], int fd[]);

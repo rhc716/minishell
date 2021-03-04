@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 13:08:12 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/04 15:13:38 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/04 15:55:17 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char			*ft_getline(char **bp)
 	size_t		len;
 	char		*line;
 	char		*rtn;
-	
+
 	rtn = NULL;
 	while (1)
 	{
@@ -29,7 +29,7 @@ char			*ft_getline(char **bp)
 		rtn = ft_strnstack(rtn, line, len);
 		free(line);
 		if (gnl == 1)
-			break;
+			break ;
 	}
 	return (rtn);
 }

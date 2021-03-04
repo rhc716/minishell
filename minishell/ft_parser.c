@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 00:08:50 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/04 15:14:39 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/04 15:39:39 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char			**ft_parse_split(char *str, char s, char c, char r)
 	char		**rtn;
 	int			i;
 	int			j;
-	
+
 	i = 0;
 	rtn = ft_split(str, s);
 	while (rtn[i] != NULL)

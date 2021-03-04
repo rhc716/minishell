@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 14:21:07 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/04 15:12:05 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/04 15:35:53 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char			*ft_msgstr(char *file)
 		len = read(fd, buf, BUFFER_SIZE);
 		rtn = ft_strnstack(rtn, buf, len);
 		if (len == -1 || len < BUFFER_SIZE)
-			break;
+			break ;
 	}
 	close(fd);
 	return (rtn);
@@ -73,21 +73,21 @@ char			*ft_msgstr(char *file)
 void			ft_ansi_escape(int i, int fd)
 {
 	if (i == 0)
-		ft_putstr_fd("\033[0m",  fd);
+		ft_putstr_fd("\033[0m", fd);
 	if (i == 1)
-		ft_putstr_fd("\033[1;90m",  fd);
+		ft_putstr_fd("\033[1;90m", fd);
 	if (i == 2)
-		ft_putstr_fd("\033[1;91m",  fd);
+		ft_putstr_fd("\033[1;91m", fd);
 	if (i == 3)
-		ft_putstr_fd("\033[1;92m",  fd);
+		ft_putstr_fd("\033[1;92m", fd);
 	if (i == 4)
-		ft_putstr_fd("\033[1;93m",  fd);
+		ft_putstr_fd("\033[1;93m", fd);
 	if (i == 5)
-		ft_putstr_fd("\033[1;94m",  fd);
+		ft_putstr_fd("\033[1;94m", fd);
 	if (i == 6)
-		ft_putstr_fd("\033[1;95m",  fd);
+		ft_putstr_fd("\033[1;95m", fd);
 	if (i == 7)
-		ft_putstr_fd("\033[1;96m",  fd);
+		ft_putstr_fd("\033[1;96m", fd);
 	if (i == 8)
-		ft_putstr_fd("\033[1;97m",  fd);
+		ft_putstr_fd("\033[1;97m", fd);
 }

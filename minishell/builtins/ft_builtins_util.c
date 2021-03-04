@@ -6,9 +6,11 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 15:30:51 by hroh              #+#    #+#             */
-/*   Updated: 2021/03/04 15:22:28 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/04 15:54:01 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../minishell.h"
 
 void	ft_sort_2d_arr(char **arr)
 {

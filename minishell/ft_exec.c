@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 14:33:02 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/04 15:12:54 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/04 15:40:11 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char			*ft_find_exec_path(char *envp[], char *cmd)
 	char		*rtn;
 	char		**paths;
 	int			j;
-	
+
 	j = 0;
 	rtn = NULL;
 	paths = ft_split(ft_getenv(envp, "PATH"), ':');
