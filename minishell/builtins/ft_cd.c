@@ -6,7 +6,7 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 16:36:56 by hroh              #+#    #+#             */
-/*   Updated: 2021/03/03 16:54:37 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/04 14:04:40 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	ft_export_pwd(char **envp[], char *old_pwd, int fd[])
 	ft_export_arg("PWD", pwd, envp, fd);
 	ft_export_arg("OLDPWD", old_pwd, envp, fd);
 	free(pwd);
+	free(old_pwd);
 }
 
 // 환경변수에 저장된 home으로 이동
@@ -40,7 +41,8 @@ void	ft_cd_home(char **envp[], char *old_pwd, int fd[])
 		closedir(dir);
 	}
 	else
-		ft_putstr_fd("minishell: cd: There is no $HOME in env.\n", STDERR_FILENO);
+		ft_putstr_fd("minishell: cd: There is no $HOME in env.\n",
+		STDERR_FILENO);
 }
 
 // 환경변수에 저장된 경로로 이동, 실패시 home으로
@@ -72,7 +74,7 @@ int		ft_cd_path(char *path, char **envp[], char *old_pwd, int fd[])
 	{
 		if (fd[1] == STDOUT_FILENO)
 		{
-			if(chdir(path) == 0)
+			if (chdir(path) == 0)
 				ft_export_pwd(envp, old_pwd, fd);
 		}
 		closedir(dir);
@@ -80,9 +82,8 @@ int		ft_cd_path(char *path, char **envp[], char *old_pwd, int fd[])
 	}
 	else
 	{
-		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
-		ft_putstr_fd(path, STDERR_FILENO);
-		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+		ft_put_err_msg("minishell: cd: ", path,
+		": No such file or directory\n", STDERR_FILENO);
 		return (1);
 	}
 }
@@ -103,11 +104,10 @@ int		ft_cd(char **arg, char **envp[], int fd[])
 		ft_cd_env(path, envp, old_pwd, fd);
 	else
 	{
-		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
-		ft_putstr_fd(path, STDERR_FILENO);
-		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+		ft_put_err_msg("minishell: cd: ", path,
+		": No such file or directory\n", STDERR_FILENO);
+		free(old_pwd);
 		return (1);
 	}
-	free(old_pwd);
 	return (0);
 }

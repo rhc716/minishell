@@ -6,7 +6,7 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 15:51:19 by hroh              #+#    #+#             */
-/*   Updated: 2021/03/03 17:49:40 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/04 13:56:09 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,9 @@ int		ft_exit_call_2(char **arg, int fd[])
 		if (ft_isdigit(arg[1][i]) == 0)
 		{
 			if (fd[1] == STDOUT_FILENO)
-				ft_putstr_fd("exit\n", STDERR_FILENO);	
-			ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
-			ft_putstr_fd(arg[1], STDERR_FILENO);
-			ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
+				ft_putstr_fd("exit\n", STDERR_FILENO);
+			ft_put_err_msg("minishell: exit: ", arg[1],
+			": numeric argument required\n", STDERR_FILENO);
 			if (fd[1] == STDOUT_FILENO)
 				ft_exit("", 255);
 			return (255);
@@ -56,28 +55,27 @@ int		ft_exit_call(char **arg, int fd[])
 // 배열의 첫번째 요소인 builtin 함수를 실행
 void	ft_exec_builtins(char **arg, char **envp[], int fd[], t_com *com)
 {
-	int ret;
-
-	ret = 0;
 	if (!ft_strncmp(arg[0], "cd", 3))
-		ret = ft_cd(arg, envp, fd);
+		com->status = ft_cd(arg, envp, fd);
 	else if (!ft_strncmp(arg[0], "echo", 5))
-		ret = ft_echo(arg, *envp, fd, com);
+		com->status = ft_echo(arg, *envp, fd, com);
 	else if (!ft_strncmp(arg[0], "pwd", 4))
-		ret = ft_pwd(fd);
+		com->status = ft_pwd(fd);
 	else if (!ft_strncmp(arg[0], "env", 4))
-		ret = ft_env(*envp, fd);
+		com->status = ft_env(*envp, fd);
 	else if (!ft_strncmp(arg[0], "export", 7))
-		ret = ft_export(arg, envp, fd);
+		com->status = ft_export(arg, envp, fd);
 	else if (!ft_strncmp(arg[0], "unset", 6))
-		ret = ft_unset(arg, envp, fd);
+		com->status = ft_unset(arg, envp, fd);
 	else if (!ft_strncmp(arg[0], "exit", 5))
-		ret = ft_exit_call(arg, fd);
+		com->status = ft_exit_call(arg, fd);
 	if (fd[0] != STDIN_FILENO)
 		close(fd[0]);
 	if (fd[1] != STDOUT_FILENO)
+	{
+		com->status = 0;
 		close(fd[1]);
-	com->status = ret;
+	}
 }
 
 // 문자열이 builtin 함수인지 검사
