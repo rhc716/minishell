@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:40 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/04 16:00:35 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/04 22:35:19 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char			**ft_clearenv(char *envp[], char *key);
 char			**ft_parse_split(char *str, char s, char c, char r);
 char			*ft_parse_redirect(char *cmd, char **in, char **out, char *rp);
 int				ft_parse_get_name(char *cmd, char **in, char **out, char *rp);
-char			*ft_quote_remove(char *str);
+char			**ft_quote_remove_list(char **str);
 char			*ft_parse_replace_quote(char *str, char c);
 char			*ft_parse_replace_inquote(char *str, char c, char r);
 char			*ft_strnstack(char *stack, char *str, size_t n);

@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 12:22:59 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/04 15:57:41 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/04 22:24:51 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,11 @@ pid_t			ft_run_cmd(char *cmd, char **envp[], int io[], t_com *com)
 
 	tmp = ft_parse_replace_inquote(ft_strdup(cmd), ' ', (char)0xff);
 	tmp = ft_ext_iofd(tmp, &ioerr[0], &ioerr[1], &ioerr[2]);
-	tmp = ft_quote_remove(tmp);
 	arg = ft_parse_split(tmp, ' ', (char)0xff, ' ');
+	arg = ft_quote_remove_list(arg);
 	free(tmp);
-	if (ioerr[0] > 0)
-		io[0] = ioerr[0];
-	if (ioerr[1] > 0)
-		io[1] = ioerr[1];
+	io[0] = (ioerr[0] > 0) ? ioerr[0] : io[0];
+	io[1] = (ioerr[1] > 0) ? ioerr[1] : io[1];
 	if (ioerr[2] == 0)
 		rtn = ft_run_exec(arg, envp, io, com);
 	else
@@ -89,9 +87,9 @@ pid_t			ft_run_exec(char *args[], char **envp[], int io[], t_com *com)
 
 	stat_loc = -1;
 	rtn = 0;
-	if (args != NULL && args[0] != NULL)
+	if (args != NULL)
 	{
-		if (ft_check_builtins(args[0]) == 1)
+		if (args[0] != NULL && ft_check_builtins(args[0]) == 1)
 			ft_exec_builtins(args, envp, io, com);
 		else
 		{

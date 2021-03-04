@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/02/09 01:43:43 by joopark           #+#    #+#              #
+#    Updated: 2021/03/04 16:44:53 by joopark          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 FILES = minishell.c
 FILES += ft_get_next_line.c
 FILES += ft_signal.c ft_exit.c ft_exec.c ft_run.c ft_console.c ft_quote.c
