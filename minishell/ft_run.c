@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 12:22:59 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/04 22:24:51 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/05 01:57:07 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ pid_t			ft_run_cmd(char *cmd, char **envp[], int io[], t_com *com)
 	free(tmp);
 	io[0] = (ioerr[0] > 0) ? ioerr[0] : io[0];
 	io[1] = (ioerr[1] > 0) ? ioerr[1] : io[1];
+	if (arg == NULL)
+		rtn = 0;
 	if (ioerr[2] == 0)
 		rtn = ft_run_exec(arg, envp, io, com);
 	else
@@ -87,23 +89,23 @@ pid_t			ft_run_exec(char *args[], char **envp[], int io[], t_com *com)
 
 	stat_loc = -1;
 	rtn = 0;
-	if (args != NULL)
+	if (args[0] != NULL && ft_check_builtins(args[0]) == 1)
+		ft_exec_builtins(args, envp, io, com);
+	else
 	{
-		if (args[0] != NULL && ft_check_builtins(args[0]) == 1)
-			ft_exec_builtins(args, envp, io, com);
+		exec = ft_find_exec(*envp, args[0]);
+		if (exec != NULL)
+			rtn = ft_exec(exec, args, *envp, io);
 		else
 		{
-			exec = ft_find_exec(*envp, args[0]);
-			if (exec != NULL)
-				rtn = ft_exec(exec, args, *envp, io);
+			ft_put_err_msg("minishell: ", args[0], NULL, 2);
+			if (args[0] != NULL && ft_strrchr(args[0], '/') != NULL)
+				ft_put_err_msg(NULL, NULL, ": No such file or directory\n", 2);
 			else
-			{
-				ft_put_err_msg("minishell: ", args[0],
-					": No such file or directory\n", STDERR_FILENO);
-				rtn = -127;
-			}
-			free(exec);
+				ft_put_err_msg(NULL, NULL, ": command not found\n", 2);
+			rtn = -127;
 		}
+		free(exec);
 	}
 	return (rtn);
 }
