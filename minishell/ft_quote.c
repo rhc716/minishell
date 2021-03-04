@@ -6,13 +6,12 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 18:27:32 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/04 02:28:46 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/04 15:14:55 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// quote 한겹 제거
 char			*ft_quote_remove(char *str)
 {
 	char		**split;
@@ -34,7 +33,6 @@ char			*ft_quote_remove(char *str)
 	return (str);
 }
 
-// 문장 내의 한겹짜리 quote를 인수 c로 대치함. 만약 quote가 닫히지 않으면 NULL 리턴.
 char			*ft_parse_replace_quote(char *str, char c)
 {
 	int			i;
@@ -64,7 +62,6 @@ char			*ft_parse_replace_quote(char *str, char c)
 	return (str);
 }
 
-// 문장 내에서 quote로 둘러쌓인 문자 c를 r로 치환함.
 char			*ft_parse_replace_inquote(char *str, char c, char r)
 {
 	int			i;

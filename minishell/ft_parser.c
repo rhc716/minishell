@@ -6,14 +6,12 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 00:08:50 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/02 18:45:11 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/04 15:14:39 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdio.h>
 
-// 문장 내에 문자 s 단위로 split 함. token 내의 c는 r로 치환
 char			**ft_parse_split(char *str, char s, char c, char r)
 {
 	char		**rtn;
@@ -36,7 +34,6 @@ char			**ft_parse_split(char *str, char s, char c, char r)
 	return (rtn);
 }
 
-// 명령어 내의 리다이렉션을 찾아 해당 파일을 인수로 반환하며 리다이렉션 및 파일은 공백으로 치환한다.
 char			*ft_parse_redirect(char *cmd, char **in, char **out, char *rp)
 {
 	int			i;
@@ -64,7 +61,6 @@ char			*ft_parse_redirect(char *cmd, char **in, char **out, char *rp)
 	return (cmd);
 }
 
-// 리다이렉션 문자를 공백으로 채우고 파일명을 인수에 집어넣는다.
 int				ft_parse_get_name(char *cmd, char **in, char **out, char *rp)
 {
 	int			rtn;

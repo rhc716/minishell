@@ -6,13 +6,12 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 16:34:53 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/04 02:32:00 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/04 15:14:22 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// 파일명으로부터 파일 디스크립터를 얻는 함수 (에러시 표준에러 출력에 에러 출력 및 에러번호 리턴)
 int				ft_getfd(char *filename, char mode)
 {
 	int			rtn;
@@ -35,7 +34,6 @@ int				ft_getfd(char *filename, char mode)
 	return (rtn);
 }
 
-// 리다이렉트 기호를 파싱해서 입/출력 파일을 연 후 인수에 저장한다. 에러시 err에 저장.
 char			*ft_ext_iofd(char *cmd, int *i, int *o, int *err)
 {
 	char		*in;
@@ -64,7 +62,6 @@ char			*ft_ext_iofd(char *cmd, int *i, int *o, int *err)
 	return (cmd);
 }
 
-// 파이프 배열을 만든다. (배열끼리 파이프로 이어붙임)
 int				**ft_genpipes(int len)
 {
 	int			**rtn;
@@ -93,7 +90,6 @@ int				**ft_genpipes(int len)
 	return (rtn);
 }
 
-// 파이프 하나를 만든다. (pipe 시스템콜이 배열 입력을 강제하여 만듬)
 int				ft_genpipe(int *i, int *o)
 {
 	int			io[2];
@@ -105,7 +101,6 @@ int				ft_genpipe(int *i, int *o)
 	return (rtn);
 }
 
-// 파이프를 닫는다.
 void			ft_closepipe(int **pipe, int len)
 {
 	while (--len >= 0)

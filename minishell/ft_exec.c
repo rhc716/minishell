@@ -6,13 +6,12 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 14:33:02 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/04 01:37:05 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/04 15:12:54 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// 파일경로, 아규먼트, 환경변수를 받아 프로세스를 실행하여 자식 프로세스의 PID를 리턴 (free 필요없음)
 pid_t			ft_exec(char *file, char *argv[], char *envp[], int fd[])
 {
 	pid_t		rtn;
@@ -37,7 +36,6 @@ pid_t			ft_exec(char *file, char *argv[], char *envp[], int fd[])
 	return (rtn);
 }
 
-// 인수로 입력된 파일이 실행 가능한지를 판별함 (실행 가능하면 1 리턴)
 int				ft_isexecutable(char *file)
 {
 	struct stat	test;
@@ -48,7 +46,6 @@ int				ft_isexecutable(char *file)
 		return (0);
 }
 
-// env 내의 PATH 중 실행 가능한 명령어 찾기. 실행 가능하면 파일경로 리턴 (free 필요)
 char			*ft_find_exec_path(char *envp[], char *cmd)
 {
 	char		*rtn;
@@ -75,7 +72,6 @@ char			*ft_find_exec_path(char *envp[], char *cmd)
 	return (rtn);
 }
 
-// 실행 가능하면 파일경로 리턴, 불가능하면 NULL 리턴 (free 필요)
 char			*ft_find_exec(char *envp[], char *cmd)
 {
 	char		*rtn;
@@ -97,7 +93,6 @@ char			*ft_find_exec(char *envp[], char *cmd)
 	return (rtn);
 }
 
-// pids 배열의 pid들을 기다린다.
 int				ft_exec_wait(pid_t *pids, int n)
 {
 	int			stat_loc;
@@ -112,7 +107,7 @@ int				ft_exec_wait(pid_t *pids, int n)
 		if (pids[i] > 0)
 		{
 			tmp = waitpid(pids[i], &stat_loc, 0);
-			rtn = ((stat_loc >> 8) & 0x000000ff); //rtn = WEXITSTATUS(stat_loc);
+			rtn = ((stat_loc >> 8) & 0x000000ff);
 		}
 		else if (pids[i] < 0)
 			rtn = pids[i] * -1;

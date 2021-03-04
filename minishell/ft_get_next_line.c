@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_next_line.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 20:43:13 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/24 16:12:19 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/04 15:13:31 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-// 42 과제 gnl과 동일하므로 별도로 수정할 필요 없음.
+
 char				*ft_getbuf(ssize_t clr, char **bp)
 {
 	if (*bp == NULL)

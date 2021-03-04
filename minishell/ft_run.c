@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 12:22:59 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/04 02:34:46 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/04 15:15:16 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "minishell.h"
 #include <stdio.h>
 
-// 입력된 라인에 대한 명령어를 ; 단위로 나누고 실행
 void			ft_run(char *cmd, char **envp[], t_com *com)
 {
 	char		**cmds;
@@ -25,14 +24,12 @@ void			ft_run(char *cmd, char **envp[], t_com *com)
 	cmds = ft_parse_split(cmd, ';', (char)0xff, ';');
 	while (cmds[i] != NULL)
 	{
-		//printf("[%s] %s\n", __func__, cmds[i]);
 		ft_run_with_pipe(cmds[i], envp, com);
 		i++;
 	}
 	ft_strsfree(cmds);
 }
 
-// 세미콜론으로 분리된 명령어를 파이프로 나누어진대로 실행
 void			ft_run_with_pipe(char *cmd, char **envp[], t_com *com)
 {
 	pid_t		*pids;
@@ -50,7 +47,6 @@ void			ft_run_with_pipe(char *cmd, char **envp[], t_com *com)
 	i = 0;
 	while (cmds[i] != NULL)
 	{
-		//printf("cmd %d : %s\n", i, cmds[i]);
 		pids[i] = ft_run_cmd(cmds[i], envp, pipes[i], com);
 		i++;
 	}
@@ -59,7 +55,6 @@ void			ft_run_with_pipe(char *cmd, char **envp[], t_com *com)
 	ft_strsfree(cmds);
 }
 
-// 가장 작은 명령어 하나에 대해서 실행
 pid_t			ft_run_cmd(char *cmd, char **envp[], int io[], t_com *com)
 {
 	pid_t		rtn;
@@ -88,7 +83,6 @@ pid_t			ft_run_cmd(char *cmd, char **envp[], int io[], t_com *com)
 	return (rtn);
 }
 
-// 가장 작은 바이너리 하나에 대해서 실행
 pid_t			ft_run_exec(char *args[], char **envp[], int io[], t_com *com)
 {
 	char		*exec;

@@ -6,13 +6,12 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 14:21:07 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/02 14:40:04 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/04 15:12:05 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// 프롬프트를 출력함.
 void			ft_prompt(void)
 {
 	char		*pwd;
@@ -20,23 +19,22 @@ void			ft_prompt(void)
 	int			i;
 
 	i = 0;
-	ft_putstr_fd("\n$ ", 1);
+	ft_putstr_fd("\n$ ", STDOUT_FILENO);
 	pwd = getcwd(NULL, 0);
 	tokens = ft_split(pwd, '/');
-	ft_ansi_escape(5);
+	ft_ansi_escape(5, STDOUT_FILENO);
 	while (tokens[i] != NULL)
 		i++;
 	if (i == 0)
-		ft_putstr_fd("/", 1);
+		ft_putstr_fd("/", STDOUT_FILENO);
 	else
-		ft_putstr_fd(tokens[i - 1], 1);
-	ft_ansi_escape(0);
-	ft_putstr_fd(" > ", 1);
+		ft_putstr_fd(tokens[i - 1], STDOUT_FILENO);
+	ft_ansi_escape(0, STDOUT_FILENO);
+	ft_putstr_fd(" > ", STDOUT_FILENO);
 	free(pwd);
 	ft_strsfree(tokens);
 }
 
-// 로그인 메시지를 출력함.
 void			ft_loginmsg(char *file)
 {
 	char		*msg;
@@ -46,11 +44,10 @@ void			ft_loginmsg(char *file)
 	if (msg == NULL)
 		return ;
 	len = ft_strlen(msg);
-	ft_putstr_fd(msg, 1);
+	ft_putstr_fd(msg, STDOUT_FILENO);
 	free(msg);
 }
 
-// 로그인 메시지 가져옴.
 char			*ft_msgstr(char *file)
 {
 	char		*rtn;
@@ -73,24 +70,24 @@ char			*ft_msgstr(char *file)
 	return (rtn);
 }
 
-void			ft_ansi_escape(int i)
+void			ft_ansi_escape(int i, int fd)
 {
 	if (i == 0)
-		ft_putstr_fd("\033[0m",  1);
+		ft_putstr_fd("\033[0m",  fd);
 	if (i == 1)
-		ft_putstr_fd("\033[1;90m",  1);
+		ft_putstr_fd("\033[1;90m",  fd);
 	if (i == 2)
-		ft_putstr_fd("\033[1;91m",  1);
+		ft_putstr_fd("\033[1;91m",  fd);
 	if (i == 3)
-		ft_putstr_fd("\033[1;92m",  1);
+		ft_putstr_fd("\033[1;92m",  fd);
 	if (i == 4)
-		ft_putstr_fd("\033[1;93m",  1);
+		ft_putstr_fd("\033[1;93m",  fd);
 	if (i == 5)
-		ft_putstr_fd("\033[1;94m",  1);
+		ft_putstr_fd("\033[1;94m",  fd);
 	if (i == 6)
-		ft_putstr_fd("\033[1;95m",  1);
+		ft_putstr_fd("\033[1;95m",  fd);
 	if (i == 7)
-		ft_putstr_fd("\033[1;96m",  1);
+		ft_putstr_fd("\033[1;96m",  fd);
 	if (i == 8)
-		ft_putstr_fd("\033[1;97m",  1);
+		ft_putstr_fd("\033[1;97m",  fd);
 }

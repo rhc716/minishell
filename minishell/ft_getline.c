@@ -6,13 +6,12 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 13:08:12 by joopark           #+#    #+#             */
-/*   Updated: 2021/02/26 13:30:56 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/04 15:13:38 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// 프롬프트 출력 후 엔터 입력 전까지 문자열을 리턴 (free 필요)
 char			*ft_getline(char **bp)
 {
 	int			gnl;

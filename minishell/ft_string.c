@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_string.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 20:50:25 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/02 13:35:48 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/04 15:15:45 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// ft_strjoin에 free 기능 추가
 char	*ft_strjoin_free(char *s1, char *s2, int free_case)
 {
 	char	*re;
@@ -36,8 +35,6 @@ char	*ft_strjoin_free(char *s1, char *s2, int free_case)
 	return (re);
 }
 
-
-// 문자열 합치는 함수
 char				*ft_strnstack(char *stack, char *str, size_t n)
 {
 	char			*rtn;
@@ -63,7 +60,6 @@ char				*ft_strnstack(char *stack, char *str, size_t n)
 	return (rtn);
 }
 
-// 2차원 문자열 배열을 복제하는 함수
 char			**ft_strsdup(char *str[])
 {
 	char		**rtn;
@@ -86,7 +82,6 @@ char			**ft_strsdup(char *str[])
 	return (rtn);
 }
 
-// 2차원 문자열 배열을 메모리 할당 해제하는 함수
 void			ft_strsfree(char *str[])
 {
 	int			i;
@@ -103,7 +98,6 @@ void			ft_strsfree(char *str[])
 	free(str);
 }
 
-// (리다이렉트 전용) str에서 단어 하나만 가져옴. 공백 포함 단어 길이만큼 리턴. 단어는 공백으로 비움.
 int				ft_getword(char *str, char **word)
 {
 	int			rtn;

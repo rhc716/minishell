@@ -6,13 +6,12 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 22:14:27 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/02 22:50:15 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/04 15:12:26 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// 2차원 배열 env에서 키값에 따른 문자열을 리턴하는 함수
 char			*ft_getenv(char *envp[], char *key)
 {
 	int			i;
@@ -29,7 +28,6 @@ char			*ft_getenv(char *envp[], char *key)
 	return (NULL);
 }
 
-// 2차원 배열 env에 키가 존재하면 수정, 없으면 새로 추가하는 함수
 char			**ft_setenv(char *envp[], char *key, char *value)
 {
 	if (ft_getenv(envp, key) == NULL)
@@ -38,7 +36,6 @@ char			**ft_setenv(char *envp[], char *key, char *value)
 		return (ft_modenv(envp, key, value));
 }
 
-// 2차원 배열 env의 기존 키에 대한 문자열을 변경하는 함수
 char			**ft_modenv(char *envp[], char *key, char *value)
 {
 	int			i;
@@ -61,7 +58,6 @@ char			**ft_modenv(char *envp[], char *key, char *value)
 	return (envp);
 }
 
-// 2차원 배열 env의 키값에 신규 문자열을 셋하는 함수
 char			**ft_newenv(char *envp[], char *key, char *value)
 {
 	int			i;
@@ -87,7 +83,6 @@ char			**ft_newenv(char *envp[], char *key, char *value)
 	return (rtn);
 }
 
-// 2차원 배열 env의 특정 키값에 대한 값을 삭제하는 함수
 char			**ft_clearenv(char *envp[], char *key)
 {
 	int			i;
