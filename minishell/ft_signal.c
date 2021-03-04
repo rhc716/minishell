@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 14:02:14 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/04 15:58:22 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/04 16:42:31 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@ void			ft_signal(void)
 void			ft_sigint(int code)
 {
 	(void)code;
-	ft_putstr_fd("\b\b  \b\b", 1);
+	ft_putstr_fd("\b\b  \b\b", STDOUT_FILENO);
+	ft_putstr_fd("\n", STDOUT_FILENO);
 	ft_prompt();
 }
 
 void			ft_sigkill(int code)
 {
 	(void)code;
-	ft_putstr_fd("\b\b  \b\b", 1);
+	ft_putstr_fd("\b\b  \b\b", STDOUT_FILENO);
 }

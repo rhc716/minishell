@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 14:21:07 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/04 15:35:53 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/04 16:41:28 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void			ft_prompt(void)
 	int			i;
 
 	i = 0;
-	ft_putstr_fd("\n$ ", STDOUT_FILENO);
+	ft_putstr_fd("$ ", STDOUT_FILENO);
 	pwd = getcwd(NULL, 0);
 	tokens = ft_split(pwd, '/');
 	ft_ansi_escape(5, STDOUT_FILENO);
