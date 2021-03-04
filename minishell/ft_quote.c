@@ -6,31 +6,26 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 18:27:32 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/04 15:14:55 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/04 22:36:10 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char			*ft_quote_remove(char *str)
+char			**ft_quote_remove_list(char **str)
 {
-	char		**split;
 	int			i;
+	char		*tmp;
 
-	str = ft_parse_replace_quote(str, (char)0xff);
-	if (str == NULL)
-		return (NULL);
-	split = ft_split(str, (char)0xff);
-	free(str);
-	str = NULL;
 	i = 0;
-	while (split[i] != NULL)
+	while (str[i] != NULL)
 	{
-		str = ft_strnstack(str, split[i], ft_strlen(split[i]));
+		tmp = ft_strtrim(str[i], "\'\"");
+		free(str[i]);
+		str[i] = tmp;
 		i++;
 	}
-	ft_strsfree(split);
-	return (str);
+	return str;
 }
 
 char			*ft_parse_replace_quote(char *str, char c)

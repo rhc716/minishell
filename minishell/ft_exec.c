@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 14:33:02 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/04 20:09:26 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/04 22:38:33 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ char			*ft_find_exec(char *envp[], char *cmd)
 	char		*rtn;
 	char		*tmp;
 
+	if (cmd == NULL || cmd[0] == '\0')
+		return (NULL);
 	if (ft_isexecutable(cmd) == 1)
 		rtn = ft_strdup(cmd);
 	else if (ft_strrchr(cmd, '/') == NULL)
