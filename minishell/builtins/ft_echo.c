@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 16:38:17 by hroh              #+#    #+#             */
-/*   Updated: 2021/03/03 16:41:26 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/04 15:23:04 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-// -n 옵션인지 체크, -nnn...n 도 동일
 int		ft_check_option_n(char *arg)
 {
 	int	i;
@@ -26,7 +25,6 @@ int		ft_check_option_n(char *arg)
 	return (1);
 }
 
-// 환경변수 출력, 및 echo $? 출력
 void	ft_echo_env(char *env_key, char *envp[], int fd[], t_com *com)
 {
 	if (*env_key == '?')

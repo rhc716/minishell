@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 16:38:24 by hroh              #+#    #+#             */
-/*   Updated: 2021/03/04 13:52:04 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/04 15:23:19 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-// 인자가 없을 때 : env 배열을 아스키 순서로 정렬해서 출력
 int		ft_export_no_arg(char *envp[], int fd[])
 {
 	char	**temp;
@@ -28,7 +27,6 @@ int		ft_export_no_arg(char *envp[], int fd[])
 	return (0);
 }
 
-// 추가 할 key 값이 가능한 값인지 검사 : 알파벳, 숫자, _로 구성, 숫자로만 구성하면 안됨
 int		ft_isvalid_key(char *key)
 {
 	int	i;
@@ -48,7 +46,6 @@ int		ft_isvalid_key(char *key)
 	return (1);
 }
 
-// 인자가 존재할 때 : 생성 또는 수정
 int		ft_export_arg(char *key, char *val, char **envp[], int fd[])
 {
 	char **tmp;

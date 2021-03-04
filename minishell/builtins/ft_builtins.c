@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtins.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 15:51:19 by hroh              #+#    #+#             */
-/*   Updated: 2021/03/04 13:56:09 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/04 15:22:43 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int		ft_exit_call_2(char **arg, int fd[])
 	return (0);
 }
 
-// ft_exit를 호출시 인자에 따라 처리
 int		ft_exit_call(char **arg, int fd[])
 {
 	if (ft_exit_call_2(arg, fd) == 255)
@@ -52,7 +51,6 @@ int		ft_exit_call(char **arg, int fd[])
 	return (0);
 }
 
-// 배열의 첫번째 요소인 builtin 함수를 실행
 void	ft_exec_builtins(char **arg, char **envp[], int fd[], t_com *com)
 {
 	if (!ft_strncmp(arg[0], "cd", 3))
@@ -78,7 +76,6 @@ void	ft_exec_builtins(char **arg, char **envp[], int fd[], t_com *com)
 	}
 }
 
-// 문자열이 builtin 함수인지 검사
 int		ft_check_builtins(char *cmd)
 {
 	if (!ft_strncmp(cmd, "cd", 3) || !ft_strncmp(cmd, "echo", 5)

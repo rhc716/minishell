@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtins_util.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 15:30:51 by hroh              #+#    #+#             */
-/*   Updated: 2021/03/04 13:57:45 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/04 15:22:28 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// 2차원 char 배열을 버블소트
 void	ft_sort_2d_arr(char **arr)
 {
 	int		i;
