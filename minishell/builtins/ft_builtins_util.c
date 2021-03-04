@@ -6,7 +6,7 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 15:30:51 by hroh              #+#    #+#             */
-/*   Updated: 2021/03/03 17:32:25 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/04 13:57:45 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,11 @@ void	ft_sort_2d_arr(char **arr)
 			}
 		}
 	}
+}
+
+void	ft_put_err_msg(char *s1, char *s2, char *s3, int fd)
+{
+	ft_putstr_fd(s1, fd);
+	ft_putstr_fd(s2, fd);
+	ft_putstr_fd(s3, fd);
 }

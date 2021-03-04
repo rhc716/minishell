@@ -6,7 +6,7 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:40 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/03 16:49:18 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/04 13:47:21 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,4 +117,5 @@ int				ft_isvalid_key(char *key);
 
 // ft_builtins_util.c
 void			ft_sort_2d_arr(char **arr);
+void			ft_put_err_msg(char *s1, char *s2, char *s3, int fd);
 #endif

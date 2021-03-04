@@ -6,25 +6,26 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 16:38:24 by hroh              #+#    #+#             */
-/*   Updated: 2021/03/03 17:13:50 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/04 13:52:04 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 // 인자가 없을 때 : env 배열을 아스키 순서로 정렬해서 출력
-void	ft_export_no_arg(char *envp[], int fd[])
+int		ft_export_no_arg(char *envp[], int fd[])
 {
 	char	**temp;
 	int		i;
 
 	temp = ft_strsdup(envp);
-	i  = -1;
+	i = -1;
 	while (temp[++i])
 		temp[i] = ft_strjoin_free("declare -x ", temp[i], 2);
 	ft_sort_2d_arr(temp);
 	ft_env(temp, fd);
 	ft_strsfree(temp);
+	return (0);
 }
 
 // 추가 할 key 값이 가능한 값인지 검사 : 알파벳, 숫자, _로 구성, 숫자로만 구성하면 안됨
@@ -91,24 +92,21 @@ int		ft_export(char **arg, char **envp[], int fd[])
 	int		i;
 
 	if (arg[1] == NULL)
-		ft_export_no_arg(*envp, fd);
-	else
+		return (ft_export_no_arg(*envp, fd));
+	i = 0;
+	while (arg[++i])
 	{
-		i = 0;
-		while (arg[++i])
+		ft_set_key_val_sp(&key, &val, arg[i], &sp);
+		if (ft_isvalid_key(key) == 0 ||
+			(sp != NULL &&
+			(val == NULL || ft_export_arg(key, val, envp, fd) == 0)))
 		{
-			ft_set_key_val_sp(&key, &val, arg[i], &sp);
-			if (ft_isvalid_key(key) == 0 ||
-				(sp != NULL && (val == NULL || ft_export_arg(key, val, envp, fd) == 0)))
-			{
-				ft_putstr_fd("minishell: export: \'", STDERR_FILENO);
-				ft_putstr_fd(arg[i], STDERR_FILENO);
-				ft_putstr_fd("\': not an identifier\n", STDERR_FILENO);
-				free(key);
-				return (1);
-			}
+			ft_put_err_msg("minishell: export: \'",
+			arg[i], "\': not an identifier\n", STDERR_FILENO);
 			free(key);
+			return (1);
 		}
+		free(key);
 	}
 	return (0);
 }
