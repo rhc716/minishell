@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 16:38:17 by hroh              #+#    #+#             */
-/*   Updated: 2021/03/04 15:23:04 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/04 20:57:41 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ int		ft_echo(char **arg, char *envp[], int fd[], t_com *com)
 		i++;
 	while (arg[i])
 	{
-		if (arg[i][0] == '$')
+		if (arg[i][0] == '$' && arg[i][1])
 			ft_echo_env(arg[i] + 1, envp, fd, com);
+		else if (arg[i][0] == '$' && arg[i][1] == '\0')
+			ft_putchar_fd('$', fd[1]);
 		else
 			ft_putstr_fd(arg[i], fd[1]);
 		if (arg[i + 1] != NULL)
