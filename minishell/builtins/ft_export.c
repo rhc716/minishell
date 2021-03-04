@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 16:38:24 by hroh              #+#    #+#             */
-/*   Updated: 2021/03/04 15:23:19 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/04 20:46:25 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,23 @@
 int		ft_export_no_arg(char *envp[], int fd[])
 {
 	char	**temp;
+	char	*sp;
+	char	*val;
 	int		i;
 
 	temp = ft_strsdup(envp);
+	i = -1;
+	while (temp[++i])
+	{
+		if ((sp = ft_strchr(temp[i], '=')) != NULL)
+			*sp = '\0';
+		if ((val = ft_getenv(envp, temp[i])) != NULL)
+		{
+			temp[i] = ft_strjoin_free(temp[i], "=\"", 1);
+			temp[i] = ft_strjoin_free(temp[i], val, 1);
+			temp[i] = ft_strjoin_free(temp[i], "\"", 1);
+		}
+	}
 	i = -1;
 	while (temp[++i])
 		temp[i] = ft_strjoin_free("declare -x ", temp[i], 2);
