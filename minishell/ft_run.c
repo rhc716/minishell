@@ -6,13 +6,13 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 12:22:59 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/05 01:57:07 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/05 12:08:13 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void			ft_run(char *cmd, char **envp[], t_com *com)
+void			ft_run(char *cmd, char **envp[])
 {
 	char		**cmds;
 	int			i;
@@ -22,13 +22,13 @@ void			ft_run(char *cmd, char **envp[], t_com *com)
 	cmds = ft_parse_split(cmd, ';', (char)0xff, ';');
 	while (cmds[i] != NULL)
 	{
-		ft_run_with_pipe(cmds[i], envp, com);
+		ft_run_with_pipe(cmds[i], envp);
 		i++;
 	}
 	ft_strsfree(cmds);
 }
 
-void			ft_run_with_pipe(char *cmd, char **envp[], t_com *com)
+void			ft_run_with_pipe(char *cmd, char **envp[])
 {
 	pid_t		*pids;
 	char		**cmds;
@@ -45,15 +45,15 @@ void			ft_run_with_pipe(char *cmd, char **envp[], t_com *com)
 	i = 0;
 	while (cmds[i] != NULL)
 	{
-		pids[i] = ft_run_cmd(cmds[i], envp, pipes[i], com);
+		pids[i] = ft_run_cmd(cmds[i], envp, pipes[i]);
 		i++;
 	}
-	com->status = ft_exec_wait(pids, i);
+	g_status = ft_exec_wait(pids, i);
 	ft_closepipe(pipes, i);
 	ft_strsfree(cmds);
 }
 
-pid_t			ft_run_cmd(char *cmd, char **envp[], int io[], t_com *com)
+pid_t			ft_run_cmd(char *cmd, char **envp[], int io[])
 {
 	pid_t		rtn;
 	char		*tmp;
@@ -70,7 +70,7 @@ pid_t			ft_run_cmd(char *cmd, char **envp[], int io[], t_com *com)
 	if (arg == NULL)
 		rtn = 0;
 	if (ioerr[2] == 0)
-		rtn = ft_run_exec(arg, envp, io, com);
+		rtn = ft_run_exec(arg, envp, io);
 	else
 		rtn = -1;
 	if (ioerr[0] > 0)
@@ -81,7 +81,7 @@ pid_t			ft_run_cmd(char *cmd, char **envp[], int io[], t_com *com)
 	return (rtn);
 }
 
-pid_t			ft_run_exec(char *args[], char **envp[], int io[], t_com *com)
+pid_t			ft_run_exec(char *args[], char **envp[], int io[])
 {
 	char		*exec;
 	pid_t		rtn;
@@ -90,7 +90,7 @@ pid_t			ft_run_exec(char *args[], char **envp[], int io[], t_com *com)
 	stat_loc = -1;
 	rtn = 0;
 	if (args[0] != NULL && ft_check_builtins(args[0]) == 1)
-		ft_exec_builtins(args, envp, io, com);
+		ft_exec_builtins(args, envp, io);
 	else
 	{
 		exec = ft_find_exec(*envp, args[0]);
