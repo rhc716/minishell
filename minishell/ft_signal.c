@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 14:02:14 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/05 12:04:14 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/05 12:31:04 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,12 @@ void			ft_sigint(int code)
 		ft_putstr_fd("\b\b  \b\b", STDOUT_FILENO);
 		ft_putstr_fd("\n", STDOUT_FILENO);
 		ft_prompt();
+		g_status = 1;
 	}
 	else
 	{
 		ft_putstr_fd("\n", STDOUT_FILENO);
+		g_status = 130;
 	}
 }
 
@@ -53,5 +55,6 @@ void			ft_sigkill(int code)
 		ft_putstr_fd("Quit: ", STDOUT_FILENO);
 		ft_putnbr_fd(stat_loc, STDOUT_FILENO);
 		ft_putstr_fd("\n", STDOUT_FILENO);
+		g_status = 131;
 	}
 }
