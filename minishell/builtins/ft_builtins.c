@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtins.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 15:51:19 by hroh              #+#    #+#             */
-/*   Updated: 2021/03/04 20:55:36 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/05 12:09:58 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,27 +51,27 @@ int		ft_exit_call(char **arg, int fd[])
 	return (0);
 }
 
-void	ft_exec_builtins(char **arg, char **envp[], int fd[], t_com *com)
+void	ft_exec_builtins(char **arg, char **envp[], int fd[])
 {
 	if (!ft_strncmp(arg[0], "cd", 3))
-		com->status = ft_cd(arg, envp, fd);
+		g_status = ft_cd(arg, envp, fd);
 	else if (!ft_strncmp(arg[0], "echo", 5))
-		com->status = ft_echo(arg, *envp, fd, com);
+		g_status = ft_echo(arg, *envp, fd);
 	else if (!ft_strncmp(arg[0], "pwd", 4))
-		com->status = ft_pwd(fd);
+		g_status = ft_pwd(fd);
 	else if (!ft_strncmp(arg[0], "env", 4))
-		com->status = ft_env(*envp, fd);
+		g_status = ft_env(*envp, fd);
 	else if (!ft_strncmp(arg[0], "export", 7))
-		com->status = ft_export(arg, envp, fd);
+		g_status = ft_export(arg, envp, fd);
 	else if (!ft_strncmp(arg[0], "unset", 6))
-		com->status = ft_unset(arg, envp, fd);
+		g_status = ft_unset(arg, envp, fd);
 	else if (!ft_strncmp(arg[0], "exit", 5))
-		com->status = ft_exit_call(arg, fd);
+		g_status = ft_exit_call(arg, fd);
 	if (fd[0] != STDIN_FILENO)
 		close(fd[0]);
 	if (fd[1] != STDOUT_FILENO)
 	{
-		com->status = 0;
+		g_status = 0;
 		close(fd[1]);
 	}
 }
