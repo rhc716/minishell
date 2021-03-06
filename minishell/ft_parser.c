@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 00:08:50 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/04 15:39:39 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/06 15:00:38 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int				ft_parse_get_name(char *cmd, char **in, char **out, char *rp)
 	else
 	{
 		cmd[0] = ' ';
+		if (*out != NULL)
+			close(ft_getfd(*out, 'w'));
 		if (cmd[1] != '\0' && cmd[1] == '>')
 		{
 			*rp = '+';
