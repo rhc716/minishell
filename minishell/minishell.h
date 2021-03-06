@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:40 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/04 22:35:19 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/05 12:10:00 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,7 @@
 #  define BUFFER_SIZE 1024
 # endif
 
-typedef struct	s_com
-{
-	int			status;
-}				t_com;
+int				g_status;
 
 char			*ft_getbuf(ssize_t clr, char **bp);
 int				ft_prechk(int fd, char **line, char **bufrtn, char **bp);
@@ -67,19 +64,18 @@ char			*ft_ext_iofd(char *cmd, int *i, int *o, int *err);
 int				**ft_genpipes(int len);
 int				ft_genpipe(int *i, int *o);
 void			ft_closepipe(int **pipe, int len);
-void			ft_run(char *cmd, char **envp[], t_com *com);
-void			ft_run_with_pipe(char *cmd, char **envp[], t_com *com);
-pid_t			ft_run_cmd(char *cmd, char **envp[], int io[], t_com *com);
-pid_t			ft_run_exec(char *args[], char **envp[], int io[], t_com *com);
+void			ft_run(char *cmd, char **envp[]);
+void			ft_run_with_pipe(char *cmd, char **envp[]);
+pid_t			ft_run_cmd(char *cmd, char **envp[], int io[]);
+pid_t			ft_run_exec(char *args[], char **envp[], int io[]);
 void			ft_prompt(void);
 void			ft_loginmsg(char *file);
 char			*ft_msgstr(char *file);
 void			ft_ansi_escape(int i, int fd);
 int				ft_check_builtins(char *cmd);
-void			ft_exec_builtins(char **arg, char **envp[],
-		int fd[], t_com *com);
+void			ft_exec_builtins(char **arg, char **envp[], int fd[]);
 int				ft_cd(char **arg, char **envp[], int fd[]);
-int				ft_echo(char **arg, char *envp[], int fd[], t_com *com);
+int				ft_echo(char **arg, char *envp[], int fd[]);
 int				ft_env(char *envp[], int fd[]);
 int				ft_export(char **arg, char **envp[], int fd[]);
 int				ft_pwd(int fd[]);
