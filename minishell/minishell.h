@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:40 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/05 12:10:00 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/08 03:08:53 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ int				ft_unset(char **arg, char **envp[], int fd[]);
 int				ft_export_arg(char *key, char *val, char **envp[], int fd[]);
 int				ft_isvalid_key(char *key);
 void			ft_sort_2d_arr(char **arr);
-void			ft_put_err_msg(char *s1, char *s2, char *s3, int fd);
-
+int				ft_put_err_msg(char *s1, char *s2, char *s3, int fd);
+void			ft_unset_str(char *str, char **envp[]);
+char			*ft_replace_env_in_arg(char *arg, char *p
+				, char *envp[], int free_yn);
 #endif

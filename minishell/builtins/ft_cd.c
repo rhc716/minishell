@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 16:36:56 by hroh              #+#    #+#             */
-/*   Updated: 2021/03/04 15:22:56 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/08 01:08:46 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,9 @@ void	ft_export_pwd(char **envp[], char *old_pwd, int fd[])
 	ft_export_arg("PWD", pwd, envp, fd);
 	ft_export_arg("OLDPWD", old_pwd, envp, fd);
 	free(pwd);
-	free(old_pwd);
 }
 
-void	ft_cd_home(char **envp[], char *old_pwd, int fd[])
+int		ft_cd_home(char **envp[], char *old_pwd, int fd[])
 {
 	char	*path;
 	DIR		*dir;
@@ -41,9 +40,10 @@ void	ft_cd_home(char **envp[], char *old_pwd, int fd[])
 	else
 		ft_putstr_fd("minishell: cd: There is no $HOME in env.\n",
 		STDERR_FILENO);
+	return (0);
 }
 
-void	ft_cd_env(char *path, char **envp[], char *old_pwd, int fd[])
+int		ft_cd_env(char *path, char **envp[], char *old_pwd, int fd[])
 {
 	char	*env_val;
 	DIR		*dir;
@@ -60,6 +60,7 @@ void	ft_cd_env(char *path, char **envp[], char *old_pwd, int fd[])
 	}
 	else
 		ft_cd_home(envp, old_pwd, fd);
+	return (0);
 }
 
 int		ft_cd_path(char *path, char **envp[], char *old_pwd, int fd[])
@@ -87,22 +88,24 @@ int		ft_cd_path(char *path, char **envp[], char *old_pwd, int fd[])
 int		ft_cd(char **arg, char **envp[], int fd[])
 {
 	char	*path;
+	char	*p;
 	char	*old_pwd;
+	int		ret;
 
 	path = arg[1];
 	old_pwd = getcwd(NULL, 0);
-	if (path != NULL && path[0] != '~' && path[0] != '$')
-		return (ft_cd_path(path, envp, old_pwd, fd));
-	else if (path == NULL || (path[0] == '~' && path[1] == '\0'))
-		ft_cd_home(envp, old_pwd, fd);
-	else if (path[0] == '$')
-		ft_cd_env(path, envp, old_pwd, fd);
-	else
+	if (path == NULL || (path[0] == '~' && path[1] == '\0'))
+		ret = ft_cd_home(envp, old_pwd, fd);
+	else if (path[0] == '$' && path[1] && ft_strrchr(path, '$') == &path[0])
+		ret = ft_cd_env(path, envp, old_pwd, fd);
+	else if ((p = ft_strchr(path, '$')) && *(p + 1) != '\0')
 	{
-		ft_put_err_msg("minishell: cd: ", path,
-		": No such file or directory\n", STDERR_FILENO);
-		free(old_pwd);
-		return (1);
+		path = ft_replace_env_in_arg(path, p, *envp, 0);
+		ret = ft_cd_path(path, envp, old_pwd, fd);
+		free(path);
 	}
-	return (0);
+	else
+		ret = ft_cd_path(path, envp, old_pwd, fd);
+	free(old_pwd);
+	return (ret);
 }
