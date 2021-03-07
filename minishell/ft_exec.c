@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 14:33:02 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/04 22:38:33 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/07 19:20:16 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,12 @@ pid_t			ft_exec(char *file, char *argv[], char *envp[], int fd[])
 int				ft_isexecutable(char *file)
 {
 	struct stat	test;
+	int			s;
 
-	if (stat(file, &test) != -1)
+	s = stat(file, &test);
+	if (((test.st_mode) & S_IFMT) == S_IFDIR)
+		return (2);
+	if (s != -1)
 		return (1);
 	else
 		return (0);

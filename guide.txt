@@ -163,7 +163,12 @@ Go Crazy
 - Execute commands that should not work like 'dsbksdgbksdghsd' and check if the shell doesn't crash and prints an error
 	=> sgasfgdfagdfsgdf
 		=> echo $?
+	=> ''
+		=> echo $?
+	=> /bin
+		=> echo $?
 - Try to execute a really really really long command with a ton of arguments
 	=> md5 -s "hTzuQjO5nukvAv78UnENqHCrlggPHF1ix6iYP13FnWL7BHYIEE69ijnAOyVtMnZAFsyRAUf82mqv7f5BD093KC9XU7zUgxqpi7iMLCA51xJlIAxBogz08sE5BXfgESESZwz07glKvArFdy4th5qRkabk3AxgRFIW2LVOQ3FDPTfiXNmBtD0cbmR1MsPq9kgDCSeXRfIbXxm3lXima1p2kzTw7d83aqca6ZhYR7PZp1U5mGwg3tiqvmfPVubBZTISJdkmB6hANFNYvQUtwmwmye8NwuY5J4lHOz9DSdROsBbcjvwiFrbcTpfhnSpNzVNxOQKUT1XAtkreykzBwqjvmHMmpJM1wncGFt9CIDTrlwM3WCVUdxv6aRbbXuVG4otu06h0wuUT9gDsHI3S9ioaBXFw4OIsursotN1KnVHGX7ow6e29erqLC9wvCP6sXXVXJlgL4kL72QMojKXFQkqE8bzK862PhZh3CqZCth1H6cwCm2RA6jX0cvSkekhe7shPLvqUOEVCRQWcmfaXJZBIN7W16pyNERscxayj1WNX2"
 	=> 한번에 1024 (stdin 버퍼 크기) byte까지만 입력 가능하다. 이 설정도 ioctl 시스템 콜로 구현해야 하는데 사용 불가능한 함수임.
 - Have fun with that beautiful minishell and enjoy it
+	=> 로그인 헤더 및 현재 경로 표기

@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 12:22:59 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/05 12:08:13 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/07 19:28:16 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,7 @@ pid_t			ft_run_exec(char *args[], char **envp[], int io[])
 {
 	char		*exec;
 	pid_t		rtn;
-	int			stat_loc;
 
-	stat_loc = -1;
 	rtn = 0;
 	if (args[0] != NULL && ft_check_builtins(args[0]) == 1)
 		ft_exec_builtins(args, envp, io);
@@ -99,11 +97,13 @@ pid_t			ft_run_exec(char *args[], char **envp[], int io[])
 		else
 		{
 			ft_put_err_msg("minishell: ", args[0], NULL, 2);
-			if (args[0] != NULL && ft_strrchr(args[0], '/') != NULL)
-				ft_put_err_msg(NULL, NULL, ": No such file or directory\n", 2);
-			else
+			rtn = (args[0] && ft_isexecutable(args[0]) == 2) ? -126 : -127;
+			if (args[0] == NULL || ft_strrchr(args[0], '/') == NULL)
 				ft_put_err_msg(NULL, NULL, ": command not found\n", 2);
-			rtn = -127;
+			else if (ft_isexecutable(args[0]) == 2)
+				ft_put_err_msg(NULL, NULL, ": is a directory\n", 2);
+			else
+				ft_put_err_msg(NULL, NULL, ": No such file or directory\n", 2);
 		}
 		free(exec);
 	}
