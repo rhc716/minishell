@@ -72,6 +72,8 @@ export
 		=> export
 		=> export NEW=MOD
 		=> export
+		=> export NEW="quote and space test"
+		=> export
 - Check them with env
 	=> env
 		=> export NEW1=TEST1

@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 18:27:32 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/07 11:04:07 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/07 13:45:49 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,27 @@
 char			**ft_quote_remove_list(char **str)
 {
 	int			i;
-	char		*tmp;
+	int			j;
+	char		**tmps;
 
 	i = 0;
 	while (str[i] != NULL)
 	{
-		tmp = ft_strtrim(str[i], "\'\"");
+		if (ft_parse_replace_quote(str[i], (char) 0xfa) == NULL)
+		{
+			free(str[i]);
+			str[i] = ft_strdup("");
+		}
+		tmps = ft_split(str[i], (char) 0xfa);
+		j = 0;
 		free(str[i]);
-		str[i] = tmp;
+		str[i] = NULL;
+		while (tmps[j] != NULL)
+		{
+			str[i] = ft_strnstack(str[i], tmps[j], ft_strlen(tmps[j]));
+			j++;
+		}
+		ft_strsfree(tmps);
 		i++;
 	}
 	return (str);
