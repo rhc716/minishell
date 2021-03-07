@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 20:50:25 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/04 15:59:23 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/07 14:17:31 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ int					ft_getword(char *str, char **word)
 	tmp = ft_substr(str, start, rtn - start);
 	tmp = ft_parse_replace_inquote(tmp, (char)0xff, ' ');
 	*word = ft_strtrim(tmp, "\'\"");
+	free(tmp);
 	while (start != rtn)
 	{
 		str[start] = ' ';
