@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtins.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 15:51:19 by hroh              #+#    #+#             */
-/*   Updated: 2021/03/08 04:06:55 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/08 12:11:27 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,29 +51,33 @@ int		ft_exit_call(char **arg, int fd[])
 	return (0);
 }
 
-void	ft_exec_builtins(char **arg, char **envp[], int fd[])
+int		ft_exec_builtins(char **arg, char **envp[], int fd[])
 {
+	int	status;
+
+	status = 0;
 	if (!ft_strncmp(arg[0], "cd", 3))
-		g_status = ft_cd(arg, envp, fd);
+		status = ft_cd(arg, envp, fd);
 	else if (!ft_strncmp(arg[0], "echo", 5))
-		g_status = ft_echo(arg, *envp, fd);
+		status = ft_echo(arg, *envp, fd);
 	else if (!ft_strncmp(arg[0], "pwd", 4))
-		g_status = ft_pwd(fd);
+		status = ft_pwd(fd);
 	else if (!ft_strncmp(arg[0], "env", 4))
-		g_status = ft_env(*envp, fd);
+		status = ft_env(*envp, fd);
 	else if (!ft_strncmp(arg[0], "export", 7))
-		g_status = ft_export(arg, envp, fd);
+		status = ft_export(arg, envp, fd);
 	else if (!ft_strncmp(arg[0], "unset", 6))
-		g_status = ft_unset(arg, envp, fd);
+		status = ft_unset(arg, envp, fd);
 	else if (!ft_strncmp(arg[0], "exit", 5))
-		g_status = ft_exit_call(arg, fd);
+		status = ft_exit_call(arg, fd);
 	if (fd[0] != STDIN_FILENO)
 		close(fd[0]);
 	if (fd[1] != STDOUT_FILENO)
 	{
-		g_status = 0;
+		status = 0;
 		close(fd[1]);
 	}
+	return (status * -1);
 }
 
 int		ft_check_builtins(char *cmd)

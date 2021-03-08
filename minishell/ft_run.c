@@ -6,7 +6,7 @@
 /*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 12:22:59 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/07 19:28:16 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/08 12:10:12 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,8 @@ pid_t			ft_run_exec(char *args[], char **envp[], int io[])
 	char		*exec;
 	pid_t		rtn;
 
-	rtn = 0;
 	if (args[0] != NULL && ft_check_builtins(args[0]) == 1)
-		ft_exec_builtins(args, envp, io);
+		rtn = ft_exec_builtins(args, envp, io);
 	else
 	{
 		exec = ft_find_exec(*envp, args[0]);

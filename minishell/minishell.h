@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 01:45:40 by joopark           #+#    #+#             */
-/*   Updated: 2021/03/08 03:08:53 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/08 12:11:14 by joopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void			ft_loginmsg(char *file);
 char			*ft_msgstr(char *file);
 void			ft_ansi_escape(int i, int fd);
 int				ft_check_builtins(char *cmd);
-void			ft_exec_builtins(char **arg, char **envp[], int fd[]);
+int				ft_exec_builtins(char **arg, char **envp[], int fd[]);
 int				ft_cd(char **arg, char **envp[], int fd[]);
 int				ft_echo(char **arg, char *envp[], int fd[]);
 int				ft_env(char *envp[], int fd[]);
