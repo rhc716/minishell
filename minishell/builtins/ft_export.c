@@ -6,7 +6,7 @@
 /*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 16:38:24 by hroh              #+#    #+#             */
-/*   Updated: 2021/03/04 20:46:25 by hroh             ###   ########.fr       */
+/*   Updated: 2021/03/08 03:59:42 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int		ft_export_no_arg(char *envp[], int fd[])
 	int		i;
 
 	temp = ft_strsdup(envp);
+	ft_unset_str("_", &temp);
 	i = -1;
 	while (temp[++i])
 	{
@@ -27,14 +28,12 @@ int		ft_export_no_arg(char *envp[], int fd[])
 			*sp = '\0';
 		if ((val = ft_getenv(envp, temp[i])) != NULL)
 		{
+			temp[i] = ft_strjoin_free("declare -x ", temp[i], 2);
 			temp[i] = ft_strjoin_free(temp[i], "=\"", 1);
 			temp[i] = ft_strjoin_free(temp[i], val, 1);
 			temp[i] = ft_strjoin_free(temp[i], "\"", 1);
 		}
 	}
-	i = -1;
-	while (temp[++i])
-		temp[i] = ft_strjoin_free("declare -x ", temp[i], 2);
 	ft_sort_2d_arr(temp);
 	ft_env(temp, fd);
 	ft_strsfree(temp);
@@ -84,15 +83,30 @@ int		ft_export_arg(char *key, char *val, char **envp[], int fd[])
 	return (1);
 }
 
-void	ft_set_key_val_sp(char **key, char **val, char *arg, char **sp)
+char	*ft_set_key_val_sp(char **key, char **val, char *arg, char *envp[])
 {
-	*key = ft_strdup(arg);
-	*val = NULL;
-	if ((*sp = ft_strchr(*key, '=')) != NULL)
+	char	*p;
+	char	*sp;
+
+	sp = NULL;
+	if (arg[0] == '=' && arg[1] == '\0')
 	{
-		**sp = '\0';
-		*val = *sp + 1;
+		*key = ft_strdup("=");
+		return (*key);
 	}
+	else
+		*key = ft_strdup(arg);
+	if (arg[0] != '=' && (sp = ft_strchr(*key, '=')) != NULL)
+		*sp = '\0';
+	if (sp != NULL && sp + 1 != NULL)
+		*val = ft_strdup(sp + 1);
+	else
+		*val = NULL;
+	if ((p = ft_strchr(*key, '$')) && *(p + 1) != '\0')
+		*key = ft_replace_env_in_arg(*key, p, envp, 1);
+	if (*val != NULL && (p = ft_strchr(*val, '$')) && *(p + 1) != '\0')
+		*val = ft_replace_env_in_arg(*val, p, envp, 1);
+	return (sp);
 }
 
 int		ft_export(char **arg, char **envp[], int fd[])
@@ -101,23 +115,24 @@ int		ft_export(char **arg, char **envp[], int fd[])
 	char	*val;
 	char	*sp;
 	int		i;
+	int		ret;
 
 	if (arg[1] == NULL)
 		return (ft_export_no_arg(*envp, fd));
 	i = 0;
+	ret = 0;
 	while (arg[++i])
 	{
-		ft_set_key_val_sp(&key, &val, arg[i], &sp);
-		if (ft_isvalid_key(key) == 0 ||
-			(sp != NULL &&
-			(val == NULL || ft_export_arg(key, val, envp, fd) == 0)))
+		sp = ft_set_key_val_sp(&key, &val, arg[i], *envp);
+		if (!ft_isvalid_key(key) || !sp || !ft_export_arg(key, val, envp, fd))
 		{
-			ft_put_err_msg("minishell: export: \'",
-			arg[i], "\': not an identifier\n", STDERR_FILENO);
-			free(key);
-			return (1);
+			if (key[0] != '\0' && !ft_isvalid_key(key))
+				ret = ft_put_err_msg("minishell: export: \'",
+				key, "\': not an identifier\n", STDERR_FILENO);
 		}
 		free(key);
+		if (val != NULL)
+			free(val);
 	}
-	return (0);
+	return (ret);
 }

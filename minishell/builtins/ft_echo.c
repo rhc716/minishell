@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joopark <joopark@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hroh <hroh@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 16:38:17 by hroh              #+#    #+#             */
-/*   Updated: 2021/03/05 12:09:50 by joopark          ###   ########.fr       */
+/*   Updated: 2021/03/08 01:08:56 by hroh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,26 @@ void	ft_echo_env(char *env_key, char *envp[], int fd[])
 		ft_putstr_fd(ft_getenv(envp, env_key), fd[1]);
 }
 
+void	ft_echo_print(int i, char **arg, char *envp[], int fd[])
+{
+	char	*temp;
+	char	*p;
+
+	if (arg[i][0] == '$' && arg[i][1] == '\0')
+		ft_putchar_fd('$', fd[1]);
+	else if (arg[i][0] == '$' && arg[i][1] &&
+		ft_strrchr(arg[i], '$') == &arg[i][0])
+		ft_echo_env(arg[i] + 1, envp, fd);
+	else if ((p = ft_strchr(arg[i], '$')) && *(p + 1) != '\0')
+	{
+		temp = ft_replace_env_in_arg(arg[i], p, envp, 0);
+		ft_putstr_fd(temp, fd[1]);
+		free(temp);
+	}
+	else
+		ft_putstr_fd(arg[i], fd[1]);
+}
+
 int		ft_echo(char **arg, char *envp[], int fd[])
 {
 	int	i;
@@ -44,12 +64,7 @@ int		ft_echo(char **arg, char *envp[], int fd[])
 		i++;
 	while (arg[i])
 	{
-		if (arg[i][0] == '$' && arg[i][1])
-			ft_echo_env(arg[i] + 1, envp, fd);
-		else if (arg[i][0] == '$' && arg[i][1] == '\0')
-			ft_putchar_fd('$', fd[1]);
-		else
-			ft_putstr_fd(arg[i], fd[1]);
+		ft_echo_print(i, arg, envp, fd);
 		if (arg[i + 1] != NULL)
 			ft_putchar_fd(' ', fd[1]);
 		i++;
